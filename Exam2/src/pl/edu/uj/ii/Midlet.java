@@ -1,13 +1,13 @@
+package pl.edu.uj.ii;
+
 /** 2011-01-13
  * @author Krzysztof Mataj
  */
 
-import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.lcdui.Graphics;
 import javax.microedition.midlet.*;
 
 public class Midlet extends MIDlet implements CommandListener {
@@ -15,7 +15,7 @@ public class Midlet extends MIDlet implements CommandListener {
     Command upCommand;
 
     public Midlet() {
-        canvas = new MapCanvasEx(1, 0, 0);
+        canvas = new MapCanvasEx(0, 0, 0);
 
     }
 
