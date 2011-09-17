@@ -13,7 +13,7 @@ import j2meunit.midletui.TestRunner;
 public class Test extends TestRunner {
     protected void startApp()
     {
-	start(new String[] { "pl.edu.uj.ii.test.SimpleImageComparer" });
+	start(new String[] { "pl.edu.uj.ii.test.SimpleImageComparerTest" });
     }
 
 }

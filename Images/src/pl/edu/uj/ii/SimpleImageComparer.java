@@ -15,6 +15,9 @@ public class SimpleImageComparer implements ImageComparer {
     private final int R_MASK = 0xff0000;
     private final int G_MASK = 0x00ff00;
     private final int B_MASK = 0x0000ff;
+    private final int R_OFFSET = 4 * 4;
+    private final int G_OFFSET = 2 * 4;
+    private final int B_OFFSET = 0 * 4;
     private final double MAX_DIST = Math.sqrt(255 * 255 + 255 * 255 + 255 * 255);
     
     private double margin;
@@ -71,13 +74,13 @@ public class SimpleImageComparer implements ImageComparer {
     }
     
     private double dist(int c1, int c2) {
-        int r1 = c1 & R_MASK;
-        int g1 = c1 & G_MASK;
-        int b1 = c1 & B_MASK;
+        int r1 = (c1 & R_MASK) >> R_OFFSET;
+        int g1 = (c1 & G_MASK) >> G_OFFSET;
+        int b1 = (c1 & B_MASK);
         
-        int r2 = c2 & R_MASK;
-        int g2 = c2 & G_MASK;
-        int b2 = c2 & B_MASK;
+        int r2 = (c2 & R_MASK) >> R_OFFSET;
+        int g2 = (c2 & G_MASK) >> G_OFFSET;
+        int b2 = (c2 & B_MASK);
 
         int rd = r1 - r2;
         int gd = g1 - g2;
