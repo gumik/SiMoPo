@@ -46,6 +46,7 @@ public class ImgCanvas extends Canvas {
         new Thread() {
             public void run() {                
                 VideoControl videoControl = getVideoControl();
+                System.out.println(System.getProperty("video.snapshot.encodings"));
                 try {
                     byte[] snapshot = videoControl.getSnapshot(null);
                     image = Image.createImage(snapshot, 0, snapshot.length);

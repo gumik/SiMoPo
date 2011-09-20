@@ -10,6 +10,7 @@ import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
+import javax.microedition.rms.RecordStoreNotOpenException;
 
 /**
  *
@@ -48,10 +49,9 @@ public class ConfigStorage {
     public void set(String recordStoreName, String key, byte[] value) 
             throws RecordStoreFullException {
         final byte[] byteKey = key.getBytes();        
-
+        RecordStore recordStore = initRecordStore(recordStoreName, true);
+        
         try {
-            RecordStore recordStore = 
-                    RecordStore.openRecordStore(recordStoreName, true);            
             RecordStoreData rsData = findInRecordStore(recordStore, byteKey);
             byte[] data = makeData(key, value);  
             
@@ -64,6 +64,8 @@ public class ConfigStorage {
             throw e;
         } catch (RecordStoreException e) {
             e.printStackTrace();
+        } finally {
+            closeRecordStore(recordStore);
         }
     }
     
@@ -94,10 +96,9 @@ public class ConfigStorage {
     public byte[] get(String recordStoreName, String key, byte[] defaultValue) 
             throws RecordStoreFullException {
         final byte[] byteKey = key.getBytes();
-
+        RecordStore recordStore = initRecordStore(recordStoreName, false);
+        
         try {
-            RecordStore recordStore = 
-                    RecordStore.openRecordStore(recordStoreName, false);
             RecordStoreData rsData = findInRecordStore(recordStore, byteKey);
             
             if (rsData != null) {
@@ -107,10 +108,10 @@ public class ConfigStorage {
             }
         } catch (RecordStoreFullException e) {
             throw e;
-        } catch (RecordStoreNotFoundException e) {
-            return defaultValue;
         } catch (RecordStoreException e) {
             e.printStackTrace();
+        } finally {
+            closeRecordStore(recordStore);
         }
         
         return defaultValue;
@@ -138,6 +139,30 @@ public class ConfigStorage {
         return null;
     }
     
+    private RecordStore initRecordStore(String name, boolean createIfNeeded) 
+            throws RecordStoreFullException {
+        RecordStore recordStore = null;
+        
+        try {
+            recordStore = 
+                    RecordStore.openRecordStore(name, createIfNeeded);      
+        } catch (RecordStoreFullException e) {
+            throw e;
+        } catch (RecordStoreException e) {
+            e.printStackTrace();
+        }
+        
+        return recordStore;
+    }
+    
+    private void closeRecordStore(RecordStore recordStore) {
+        try {
+            recordStore.closeRecordStore();
+        } catch (RecordStoreException e) {
+            // ignore
+        }
+    }
+    
     private RecordStoreData findInRecordStore(RecordStore recordStore, 
             final byte[] byteKey) throws RecordStoreFullException {
         try {
@@ -149,8 +174,9 @@ public class ConfigStorage {
                 }, null, false);
             
             if (enumeration.hasNextElement()) {
-                return new RecordStoreData(enumeration.nextRecordId(), 
-                        enumeration.nextRecord());
+                int id = enumeration.nextRecordId();
+                byte[] data = recordStore.getRecord(id);
+                return new RecordStoreData(id, data);
             }
         } catch (RecordStoreFullException e) {
             throw e;
