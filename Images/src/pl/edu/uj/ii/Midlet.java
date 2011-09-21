@@ -7,9 +7,11 @@ package pl.edu.uj.ii;
 
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.*;
-import pl.edu.uj.ii.config.Config;
-import pl.edu.uj.ii.controller.GigaController;
-import pl.edu.uj.ii.gui.ConfigForm;
+import pl.edu.uj.ii.psm.images.model.Config;
+import pl.edu.uj.ii.psm.images.controller.GigaController;
+import pl.edu.uj.ii.psm.images.model.FileSystemBrowser;
+import pl.edu.uj.ii.psm.images.view.ConfigForm;
+import pl.edu.uj.ii.psm.images.view.FileSystemBrowserView;
 
 /**
  * @author gumik
@@ -22,10 +24,16 @@ public class Midlet extends MIDlet {
         Config config = Config.getInstance();
         ConfigForm configForm = new ConfigForm();
         
-        GigaController gigaController = new GigaController();
-        gigaController.setConfig(configForm, config);
+        FileSystemBrowser fileSystemBrowser = new FileSystemBrowser();
+        FileSystemBrowserView fileSystemBrowserView = 
+                new FileSystemBrowserView();
         
-        Display.getDisplay(this).setCurrent(configForm);
+        GigaController gigaController = new GigaController(this);
+        gigaController.setConfig(configForm, config);
+        gigaController.setFileSystemBrowser(fileSystemBrowserView, 
+                fileSystemBrowser);
+        
+        Display.getDisplay(this).setCurrent(fileSystemBrowserView);
     }
     
     public void pauseApp() {

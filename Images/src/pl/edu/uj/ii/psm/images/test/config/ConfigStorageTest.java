@@ -2,14 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.uj.ii.test.config;
+package pl.edu.uj.ii.psm.images.test.config;
 
 import j2meunit.framework.Test;
 import j2meunit.framework.TestCase;
 import j2meunit.framework.TestMethod;
 import j2meunit.framework.TestSuite;
 import javax.microedition.rms.RecordStoreFullException;
-import pl.edu.uj.ii.config.ConfigStorage;
+import pl.edu.uj.ii.psm.images.model.ConfigStorage;
 
 /**
  *

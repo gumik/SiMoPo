@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.uj.ii.test;
+package pl.edu.uj.ii.psm.images.test;
 
 import j2meunit.midletui.TestRunner;
 

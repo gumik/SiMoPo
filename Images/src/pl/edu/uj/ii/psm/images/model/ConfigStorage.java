@@ -2,15 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.uj.ii.config;
+package pl.edu.uj.ii.psm.images.model;
 
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordFilter;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreFullException;
-import javax.microedition.rms.RecordStoreNotFoundException;
-import javax.microedition.rms.RecordStoreNotOpenException;
 
 /**
  *
@@ -49,9 +47,10 @@ public class ConfigStorage {
     public void set(String recordStoreName, String key, byte[] value) 
             throws RecordStoreFullException {
         final byte[] byteKey = key.getBytes();        
-        RecordStore recordStore = initRecordStore(recordStoreName, true);
+        RecordStore recordStore = null;
         
         try {
+            recordStore = RecordStore.openRecordStore(recordStoreName, true);
             RecordStoreData rsData = findInRecordStore(recordStore, byteKey);
             byte[] data = makeData(key, value);  
             
@@ -63,6 +62,7 @@ public class ConfigStorage {
         } catch (RecordStoreFullException e) {
             throw e;
         } catch (RecordStoreException e) {
+            // TODO: remove this
             e.printStackTrace();
         } finally {
             closeRecordStore(recordStore);
@@ -96,9 +96,10 @@ public class ConfigStorage {
     public byte[] get(String recordStoreName, String key, byte[] defaultValue) 
             throws RecordStoreFullException {
         final byte[] byteKey = key.getBytes();
-        RecordStore recordStore = initRecordStore(recordStoreName, false);
+        RecordStore recordStore = null;
         
         try {
+            recordStore = RecordStore.openRecordStore(recordStoreName, true);
             RecordStoreData rsData = findInRecordStore(recordStore, byteKey);
             
             if (rsData != null) {
@@ -109,6 +110,7 @@ public class ConfigStorage {
         } catch (RecordStoreFullException e) {
             throw e;
         } catch (RecordStoreException e) {
+            // TODO: remove this
             e.printStackTrace();
         } finally {
             closeRecordStore(recordStore);
@@ -133,26 +135,11 @@ public class ConfigStorage {
         } catch (RecordStoreFullException e) {
             throw e;
         } catch (RecordStoreException e) {
+            // TODO
             e.printStackTrace();
         }
         
         return null;
-    }
-    
-    private RecordStore initRecordStore(String name, boolean createIfNeeded) 
-            throws RecordStoreFullException {
-        RecordStore recordStore = null;
-        
-        try {
-            recordStore = 
-                    RecordStore.openRecordStore(name, createIfNeeded);      
-        } catch (RecordStoreFullException e) {
-            throw e;
-        } catch (RecordStoreException e) {
-            e.printStackTrace();
-        }
-        
-        return recordStore;
     }
     
     private void closeRecordStore(RecordStore recordStore) {
@@ -164,24 +151,18 @@ public class ConfigStorage {
     }
     
     private RecordStoreData findInRecordStore(RecordStore recordStore, 
-            final byte[] byteKey) throws RecordStoreFullException {
-        try {
-            RecordEnumeration enumeration = recordStore.enumerateRecords(
-                new RecordFilter() {
-                    public boolean matches(byte[] bytes) {
-                        return isKeyMatch(byteKey, bytes);
-                    }
-                }, null, false);
-            
-            if (enumeration.hasNextElement()) {
-                int id = enumeration.nextRecordId();
-                byte[] data = recordStore.getRecord(id);
-                return new RecordStoreData(id, data);
-            }
-        } catch (RecordStoreFullException e) {
-            throw e;
-        } catch (RecordStoreException e) {
-            e.printStackTrace();
+            final byte[] byteKey) throws RecordStoreException {
+        RecordEnumeration enumeration = recordStore.enumerateRecords(
+            new RecordFilter() {
+                public boolean matches(byte[] bytes) {
+                    return isKeyMatch(byteKey, bytes);
+                }
+            }, null, false);
+
+        if (enumeration.hasNextElement()) {
+            int id = enumeration.nextRecordId();
+            byte[] data = recordStore.getRecord(id);
+            return new RecordStoreData(id, data);
         }
         
         return null;

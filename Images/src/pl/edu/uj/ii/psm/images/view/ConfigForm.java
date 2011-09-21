@@ -2,16 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.uj.ii.gui;
+package pl.edu.uj.ii.psm.images.view;
 
-import javax.microedition.lcdui.Alert;
-import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.ItemCommandListener;
 import javax.microedition.lcdui.TextField;
-import pl.edu.uj.ii.MidletManager;
 
 /**
  *
@@ -39,49 +36,24 @@ public class ConfigForm extends Form {
         
         this.addCommand(okCommand);
         this.addCommand(cancelCommand);
-        
-//        this.setCommandListener(new CommandListener() {
-//            public void commandAction(Command cmnd, Displayable dsplbl) {
-//                if (cmnd == okCommand) {
-//                    okAction();
-//                } else if (cmnd == cancelCommand) {
-//                    cancelAction();
-//                }
-//            }
-//        });
     }
-    
-//    public void setListener(ConfigFormListener listener) {
-//        this.listener = listener;
-//    }
     
     public int getDelay() {
         return Integer.parseInt(delay.getString());
     }
     
-    public void setDelay(int delay) {
-        this.delay.setString(Integer.toString(delay));
+    public void setDelay(int value) {
+        this.delay.setString(Integer.toString(value));
     }
     
-//    public void showError(String message) {
-//        Alert alert = new Alert("Error while saving config", message, null, 
-//                AlertType.ERROR);
-//        DisplayManager.getInstance().showAlert(this, alert);
-//    }
+    public double getSimilarityFactor() {
+        return Double.parseDouble(similarityFactor.getString());
+    }
     
-//    private void okAction() {
-//        if (listener != null) {
-//            listener.okPressed();
-//        }
-//    }
-//    
-//    private void cancelAction() {
-//        if (listener != null) {
-//            listener.cancelPressed();
-//        }
-//    }
+    public void setSimilarityFactor(double value) {
+        similarityFactor.setString(Double.toString(value));
+    }
     
-//    private ConfigFormListener listener;
     private TextField similarityFactor;
     private TextField delay;
 }
