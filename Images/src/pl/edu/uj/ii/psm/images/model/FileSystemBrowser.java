@@ -20,6 +20,7 @@ public class FileSystemBrowser {
         setDrivesList();
         level = 0;
         path = "file:///";
+        lock = new Object();
     }
     
     public Vector getItems() {
@@ -42,22 +43,26 @@ public class FileSystemBrowser {
         if (level == ROOT_DIR) {            
             new Thread() {
                 public void run() {
-                    removeFromPath();
-                    setDrivesList();           
-                    --level;
+                    synchronized (lock) {
+                        removeFromPath();
+                        setDrivesList();
+                        --level;
+                    }
                 }
             }.start(); 
         } else {
             new Thread() {            
                 public void run() {
-                    String prevPath = path;
-                    removeFromPath();
-                    try
-                    {
-                        setDirsList();       
-                        --level;
-                    } catch (IOException e) {
-                        path = prevPath;
+                    synchronized (lock) {
+                        String prevPath = path;
+                        removeFromPath();
+                        try
+                        {
+                            setDirsList();
+                            --level;
+                        } catch (IOException e) {
+                            path = prevPath;
+                        }
                     }
                 }
             }.start();
@@ -67,14 +72,16 @@ public class FileSystemBrowser {
     public void go(final String part) {
         new Thread() {
             public void run() {
-                String prevPath = path;
-                addToPath(part);
-        
-                try {
-                    setDirsList();
-                    ++level;
-                } catch (Exception e) {
-                    path = prevPath;
+                synchronized (lock) {
+                    String prevPath = path;
+                    addToPath(part);
+
+                    try {
+                        setDirsList();
+                        ++level;
+                    } catch (Exception e) {
+                        path = prevPath;
+                    }
                 }
             }
         }.start();
@@ -132,4 +139,5 @@ public class FileSystemBrowser {
     private FileSystemBrowserListener listener;
     private int level;
     private String path;
+    private final Object lock;
 }
