@@ -27,12 +27,37 @@ public class FileSystemBrowser {
         return items;
     }
     
-    public String getPath() {
+    public String getSimplifiedPath() {
         return path.substring(8);
+    }
+    
+    public String getPath() {
+        return path;
     }
     
     public void setListener(FileSystemBrowserListener listener) {
         this.listener = listener;
+    }
+    
+    public void setPath(String path) {
+        while (level > 0) {
+            goUp();
+        }
+        
+        int lastIdx = 0;
+        while (true) {
+            int idx = path.indexOf("/", lastIdx);
+            if (idx == -1) {
+                break;
+            }
+            
+            go(path.substring(lastIdx, idx + 1));
+            lastIdx = idx + 1;
+        }
+//        
+//        if (listener != null) {
+//            listener.itemsChanged(this);
+//        }        
     }
     
     public void goUp() {

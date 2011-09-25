@@ -15,6 +15,7 @@ public class Config {
     private static final String RECORD_STORE_NAME = "config";
     private static final String DELAY_KEY = "delay";
     private static final String SIMILARITY_FACTOR_KEY = "similarity";
+    private static final String PATH_KEY = "path";
     
     private Config() {
         
@@ -60,5 +61,13 @@ public class Config {
     public double getSimilarityFactor() throws RecordStoreFullException {
         return (double)ConfigStorage.getInstance().get(RECORD_STORE_NAME, 
                 SIMILARITY_FACTOR_KEY, 6660) / 100;
+    }
+    
+    public void setPath(String value) throws RecordStoreFullException {
+        ConfigStorage.getInstance().set(RECORD_STORE_NAME, PATH_KEY, value);
+    }
+    
+    public String getPath() throws RecordStoreFullException {
+        return ConfigStorage.getInstance().get(RECORD_STORE_NAME, PATH_KEY, "");
     }
 }

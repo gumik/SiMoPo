@@ -6,8 +6,6 @@ package pl.edu.uj.ii.psm.images.controller;
 
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
-import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.rms.RecordStoreFullException;
@@ -16,13 +14,15 @@ import pl.edu.uj.ii.psm.images.model.Config;
 import pl.edu.uj.ii.psm.images.model.FileSystemBrowser;
 import pl.edu.uj.ii.psm.images.model.FileSystemBrowserListener;
 import pl.edu.uj.ii.psm.images.view.ConfigForm;
+import pl.edu.uj.ii.psm.images.view.ConfigFormListener;
 import pl.edu.uj.ii.psm.images.view.FileSystemBrowserView;
+import pl.edu.uj.ii.psm.images.view.FileSystemBrowserViewListener;
 
 /**
  *
  * @author gumik
  */
-public class GigaController implements CommandListener {
+public class GigaController {
 
     private Config configModel;
     private ConfigForm configForm;
@@ -36,22 +36,39 @@ public class GigaController implements CommandListener {
     
     public void setConfig(ConfigForm form, Config config) {
         this.configForm = form;
-        form.setCommandListener(this);
+        //form.setCommandListener(this);
         this.configModel = config;
         
         try {
             form.setDelay(config.getDelay());
             form.setSimilarityFactor(config.getSimilarityFactor());
+            form.setPath(config.getPath());
         } catch (RecordStoreFullException ex) {
             // TODO
             ex.printStackTrace();
         }
+        
+        configForm.setListener(new ConfigFormListener() {
+
+            public void okPressed() {
+                configOkPressed();
+            }
+
+            public void cancelPressed() {
+                configCancelPressed();
+            }
+
+            public void pathEditRequested() {
+                configPathEditRequested();
+            }
+        });
     }
     
     public void configOkPressed() {
         try {
             configModel.setDelay(configForm.getDelay());
             configModel.setSimilarityFactor(configForm.getSimilarityFactor());
+            configModel.setPath(configForm.getPath());
         } catch (IllegalArgumentException e) {            
             Alert alert = new Alert("Error while saving config", e.getMessage(),
                     null, AlertType.ERROR);
@@ -77,7 +94,12 @@ public class GigaController implements CommandListener {
         this.fileSystemBrowserView = fileSystemBrowserView;
         this.fileSystemBrowser = fileSystemBrowser;
         fileSystemBrowserSetItems();
-        
+        try {
+            fileSystemBrowser.setPath(configModel.getPath());
+        } catch (RecordStoreFullException ex) {
+            // TODO
+            ex.printStackTrace();
+        }
         fileSystemBrowser.setListener(new FileSystemBrowserListener() {
 
             public void itemsChanged(FileSystemBrowser fileSystemBrowser) {
@@ -85,35 +107,41 @@ public class GigaController implements CommandListener {
             }
         });
         
-        fileSystemBrowserView.setCommandListener(this);
+        fileSystemBrowserView.setListener(new FileSystemBrowserViewListener() {
+            public void goUpRequested() {
+                browserBackPressed();
+            }
+
+            public void goIntoRequested(String item) {
+                browserGoPressed(item);
+            }
+
+            public void selectPressed() {
+                browserSelectPressed();
+            }
+        });
+    }
+    
+    private void configPathEditRequested() {
+        Display.getDisplay(midlet).setCurrent(fileSystemBrowserView);
     }
 
     private void fileSystemBrowserSetItems() {
         fileSystemBrowserView.setItems(fileSystemBrowser.getItems());
-        fileSystemBrowserView.setTitle(fileSystemBrowser.getPath());
+        fileSystemBrowserView.setTitle(fileSystemBrowser.getSimplifiedPath());
     }
     
     private void browserBackPressed() {
         fileSystemBrowser.goUp();
     }
-    
-    private void browserGoPressed() {
-        fileSystemBrowser.go(fileSystemBrowserView.getSelected());
-    }
 
-    public void commandAction(Command command, Displayable displayable) {
-        if (displayable == configForm) {
-            switch (command.getCommandType()) {
-                case Command.OK: configOkPressed(); break;
-                case Command.CANCEL: configCancelPressed(); break;
-            }
-        } else if (displayable == fileSystemBrowserView) {
-            if (command.getLabel().equals("go")) {
-                browserGoPressed();
-            } else if (command.getLabel().equals("up")) {
-                browserBackPressed();
-            }
-        }
+    private void browserGoPressed(String item) {
+        fileSystemBrowser.go(item);
+    }
+    
+    private void browserSelectPressed() {
+        configForm.setPath(fileSystemBrowser.getSimplifiedPath());
+        Display.getDisplay(midlet).setCurrent(configForm);
     }
     
     private void exitApp() {

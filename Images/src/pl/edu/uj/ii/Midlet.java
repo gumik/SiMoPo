@@ -33,7 +33,7 @@ public class Midlet extends MIDlet {
         gigaController.setFileSystemBrowser(fileSystemBrowserView, 
                 fileSystemBrowser);
         
-        Display.getDisplay(this).setCurrent(fileSystemBrowserView);
+        Display.getDisplay(this).setCurrent(configForm);
     }
     
     public void pauseApp() {

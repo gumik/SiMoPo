@@ -8,8 +8,8 @@ package pl.edu.uj.ii.psm.images.view;
  *
  * @author gumik
  */
-public interface ConfigFormListener {
-    public void okPressed();
-    public void cancelPressed();
-    public void pathEditRequested();
+public interface FileSystemBrowserViewListener {
+    public void goUpRequested();
+    public void goIntoRequested(String item);
+    public void selectPressed();
 }
