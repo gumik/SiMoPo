@@ -15,8 +15,8 @@ import javax.microedition.io.file.FileSystemRegistry;
  *
  * @author gumik
  */
-public class FileSystemBrowser {
-    public FileSystemBrowser() {        
+public class Browser {
+    public Browser() {        
         setDrivesList();
         level = 0;
         path = "file:///";
@@ -35,7 +35,7 @@ public class FileSystemBrowser {
         return path;
     }
     
-    public void setListener(FileSystemBrowserListener listener) {
+    public void setListener(BrowserListener listener) {
         this.listener = listener;
     }
     
@@ -99,7 +99,7 @@ public class FileSystemBrowser {
             public void run() {
                 synchronized (lock) {
                     String prevPath = path;
-                    addToPath(part);
+                    path = addToPath(part);
 
                     try {
                         setDirsList();
@@ -112,10 +112,28 @@ public class FileSystemBrowser {
         }.start();
     }
     
-    private void addToPath(String part) {
-        StringBuffer sb = new StringBuffer(path.length() + part.length()/* + 1*/);
-        sb.append(path)./*append('/').*/append(part);
-        path = sb.toString();
+    public void makeDirectory(final String name) {
+        new Thread() {
+            public void run() {
+                synchronized (lock) {
+                    String dirPath = addToPath(name);
+                    try {
+                        FileConnection dir = (FileConnection) Connector.open(dirPath);
+                        dir.mkdir();
+                        setDirsList();
+                        notifyChanged();
+                    } catch (IOException ex) {
+                        notifyError("Cannot create directory.");
+                    }
+                }
+            }
+        }.start();
+    }
+    
+    private String addToPath(String part) {
+        StringBuffer sb = new StringBuffer(path.length() + part.length());
+        sb.append(path).append(part);
+        return sb.toString();
     }
     
     private void removeFromPath() {
@@ -157,11 +175,17 @@ public class FileSystemBrowser {
         }
     }
     
+    private void notifyError(String message) {
+        if (listener != null) {
+            listener.errorOccured(message);
+        }
+    }
+    
     private static final int DRIVES = 0;
     private static final int ROOT_DIR = 1;
     
     private Vector items;
-    private FileSystemBrowserListener listener;
+    private BrowserListener listener;
     private int level;
     private String path;
     private final Object lock;

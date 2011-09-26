@@ -9,9 +9,11 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.*;
 import pl.edu.uj.ii.psm.images.model.Config;
 import pl.edu.uj.ii.psm.images.controller.GigaController;
-import pl.edu.uj.ii.psm.images.model.FileSystemBrowser;
+import pl.edu.uj.ii.psm.images.model.Browser;
+import pl.edu.uj.ii.psm.images.model.PhotoThread;
 import pl.edu.uj.ii.psm.images.view.ConfigForm;
-import pl.edu.uj.ii.psm.images.view.FileSystemBrowserView;
+import pl.edu.uj.ii.psm.images.view.BrowserView;
+import pl.edu.uj.ii.psm.images.view.PhotoView;
 
 /**
  * @author gumik
@@ -24,16 +26,20 @@ public class Midlet extends MIDlet {
         Config config = Config.getInstance();
         ConfigForm configForm = new ConfigForm();
         
-        FileSystemBrowser fileSystemBrowser = new FileSystemBrowser();
-        FileSystemBrowserView fileSystemBrowserView = 
-                new FileSystemBrowserView();
+        Browser fileSystemBrowser = new Browser();
+        BrowserView fileSystemBrowserView = 
+                new BrowserView();
+        
+        PhotoThread photoThread = new PhotoThread();
+        PhotoView photoView = new PhotoView();
         
         GigaController gigaController = new GigaController(this);
         gigaController.setConfig(configForm, config);
-        gigaController.setFileSystemBrowser(fileSystemBrowserView, 
+        gigaController.setBrowser(fileSystemBrowserView, 
                 fileSystemBrowser);
+        gigaController.setPhoto(photoView, photoThread);
         
-        Display.getDisplay(this).setCurrent(configForm);
+        Display.getDisplay(this).setCurrent(photoView);
     }
     
     public void pauseApp() {

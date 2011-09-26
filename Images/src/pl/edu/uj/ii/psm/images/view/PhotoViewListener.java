@@ -8,8 +8,9 @@ package pl.edu.uj.ii.psm.images.view;
  *
  * @author gumik
  */
-public interface FileSystemBrowserViewListener {
-    public void goUpRequested();
-    public void goIntoRequested(String item);
-    public void selectPressed();
+public interface PhotoViewListener {
+    public void startPressed();
+    public void stopPressed();
+    public void configPressed();
+    public void exitPressed();
 }

@@ -8,6 +8,7 @@ package pl.edu.uj.ii.psm.images.model;
  *
  * @author gumik
  */
-public interface FileSystemBrowserListener {
-    public void itemsChanged(FileSystemBrowser fileSystemBrowser);
+public interface BrowserListener {
+    public void itemsChanged(Browser fileSystemBrowser);
+    public void errorOccured(String message);
 }

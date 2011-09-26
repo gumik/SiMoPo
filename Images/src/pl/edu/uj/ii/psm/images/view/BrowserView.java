@@ -14,15 +14,18 @@ import javax.microedition.lcdui.List;
  *
  * @author gumik
  */
-public class FileSystemBrowserView extends List {
+public class BrowserView extends List {
     
-    public FileSystemBrowserView() {
+    public BrowserView() {
         super("Select destination folder", List.IMPLICIT);        
         final Command goUpCommand = new Command("Back", Command.SCREEN, 1);
         final Command goCommand = new Command("Open", Command.SCREEN, 0);
         final Command selectCommand = new Command("Select current", Command.OK, 1);
+        final Command mkdirCommand = new Command("Create directory", Command.SCREEN, 2);
+        
         this.addCommand(goUpCommand);
         this.addCommand(selectCommand);
+        this.addCommand(mkdirCommand);
         this.setSelectCommand(goCommand);
         
         this.setCommandListener(new CommandListener() {
@@ -42,6 +45,8 @@ public class FileSystemBrowserView extends List {
                     listener.goIntoRequested(getString(selectedIndex));
                 } else if (cmnd == selectCommand) {
                     listener.selectPressed();
+                } else if (cmnd == mkdirCommand) {
+                    listener.mkdirPressed();
                 }
             }
         });
@@ -56,13 +61,9 @@ public class FileSystemBrowserView extends List {
         }
     }
     
-//    public String getSelected() {
-//        return getString(getSelectedIndex());
-//    }
-    
-    public void setListener(FileSystemBrowserViewListener listener) {
+    public void setListener(BrowserViewListener listener) {
         this.listener = listener;
     }
     
-    private FileSystemBrowserViewListener listener;
+    private BrowserViewListener listener;
 }
