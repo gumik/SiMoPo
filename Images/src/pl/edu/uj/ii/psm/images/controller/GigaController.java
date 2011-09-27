@@ -14,10 +14,15 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 import javax.microedition.rms.RecordStoreFullException;
+import pl.edu.uj.ii.DebugScreen;
 import pl.edu.uj.ii.Midlet;
+import pl.edu.uj.ii.psm.images.model.ImageComparer;
 import pl.edu.uj.ii.psm.images.model.Config;
 import pl.edu.uj.ii.psm.images.model.Browser;
 import pl.edu.uj.ii.psm.images.model.BrowserListener;
+import pl.edu.uj.ii.psm.images.model.ConfigListener;
+import pl.edu.uj.ii.psm.images.model.PhotoSaver;
+import pl.edu.uj.ii.psm.images.model.PhotoSaverListener;
 import pl.edu.uj.ii.psm.images.model.PhotoThread;
 import pl.edu.uj.ii.psm.images.model.PhotoThreadListener;
 import pl.edu.uj.ii.psm.images.view.ConfigForm;
@@ -39,6 +44,8 @@ public class GigaController {
     private BrowserView browserView;
     private PhotoThread photoThread;
     private PhotoView photoView;
+    private PhotoSaver photoSaver;
+    private ImageComparer imageComparer;
     private Midlet midlet;
     
     public GigaController(Midlet midlet) {        
@@ -73,6 +80,21 @@ public class GigaController {
                 configPathEditRequested();
             }
         });
+        
+        configModel.setListener(new ConfigListener() {
+
+            public void PathChanged(String path) {
+                configPathChanged(path);
+            }
+
+            public void SimilarityFactorChanged(double factor) {
+                configSimilarityFactorChanged(factor);
+            }
+
+            public void DelayChanged(int delay) {
+                configDelayChanged(delay);
+            }
+        });
     }
     
     public void configOkPressed() {
@@ -99,6 +121,18 @@ public class GigaController {
     
     private void configPathEditRequested() {
         Display.getDisplay(midlet).setCurrent(browserView);
+    }
+
+    private void configPathChanged(String path) {
+        photoSaver.setPath(path);
+    }
+
+    private void configSimilarityFactorChanged(double factor) {
+        imageComparer.setMargin(factor / 100);
+    }
+
+    private void configDelayChanged(int delay) {
+        photoThread.setDelay(delay);
     }
     
     public void setBrowser(
@@ -184,9 +218,24 @@ public class GigaController {
         showAlert(alert, browserView);
     }
     
-    public void setPhoto(PhotoView photoView, PhotoThread photoThread) {
+    public void setPhoto(final PhotoView photoView, PhotoThread photoThread, 
+            PhotoSaver photoSaver, ImageComparer imageComparer) {
         this.photoThread = photoThread;
         this.photoView = photoView;
+        this.photoSaver = photoSaver;
+        this.imageComparer = imageComparer;
+        
+        try {
+            imageComparer.setMargin(configModel.getSimilarityFactor() / 100);
+        } catch (RecordStoreFullException ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            photoSaver.setPath(configModel.getPath());
+        } catch (RecordStoreFullException ex) {
+            ex.printStackTrace();
+        }
         
         try {
             photoThread.setDelay(configModel.getDelay());
@@ -196,7 +245,7 @@ public class GigaController {
         
         photoThread.setListener(new PhotoThreadListener() {
 
-            public void photoReceived(Image image) {
+            public void photoReceived(byte[] image) {
                 photoPhotoReceived(image);
             }
 
@@ -217,6 +266,13 @@ public class GigaController {
 
             public void startPressed() {
                 photoViewStartPressed();
+                Display.getDisplay(midlet).setCurrent(DebugScreen.getInstance());
+                DebugScreen.getInstance().setCommandListener(new CommandListener() {
+
+                    public void commandAction(Command cmnd, Displayable dsplbl) {
+                        Display.getDisplay(midlet).setCurrent(photoView);
+                    }
+                });
             }
 
             public void stopPressed() {
@@ -231,10 +287,31 @@ public class GigaController {
                 photoViewExitPressed();
             }
         });
+        
+        photoSaver.setListener(new PhotoSaverListener() {
+
+            public void savedCountChanged(int count) {
+                photoSaverSavedCountChanged(count);
+            }
+
+            public void sentCountChanged(int count) {
+                photoSaverSentCountChanged(count);
+            }
+
+            public void differentCountChanged(int count) {
+                photoSaverDiffCountChanged(count);
+            }
+
+            public void allCountChanged(int count) {
+                photoSaverAllCountChanged(count);
+            }
+        });
     }
 
-    private void photoPhotoReceived(Image image) {
+    private void photoPhotoReceived(byte[] photo) {
+        Image image = Image.createImage(photo, 0, photo.length);
         photoView.setActualPhoto(image);
+        photoSaver.addPhoto(photo, image);
     }
 
     private void photoErrorOccured(Exception e) {
@@ -263,6 +340,22 @@ public class GigaController {
 
     private void photoViewExitPressed() {
         exitApp();
+    }
+
+    private void photoSaverSavedCountChanged(int count) {
+        photoView.setPhotosSavedCount(count);
+    }
+
+    private void photoSaverSentCountChanged(int count) {
+        photoView.setPhotosSentCount(count);
+    }
+
+    private void photoSaverDiffCountChanged(int count) {
+        photoView.setPhotosDiffCount(count);
+    }
+
+    private void photoSaverAllCountChanged(int count) {
+        photoView.setPhotosAllCount(count);
     }
     
     private void exitApp() {

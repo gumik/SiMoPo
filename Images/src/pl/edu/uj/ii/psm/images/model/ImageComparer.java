@@ -2,15 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.uj.ii;
+package pl.edu.uj.ii.psm.images.model;
 
 import javax.microedition.lcdui.Image;
+import pl.edu.uj.ii.DebugScreen;
 
 /**
  *
  * @author gumik
  */
-public class SimpleImageComparer implements ImageComparer {
+public class ImageComparer {
 
     private final int R_MASK = 0xff0000;
     private final int G_MASK = 0x00ff00;
@@ -22,7 +23,7 @@ public class SimpleImageComparer implements ImageComparer {
     
     private double margin;
     
-    public SimpleImageComparer(double margin) {
+    public ImageComparer(double margin) {
         this.setMargin(margin);
     }
     
@@ -52,6 +53,7 @@ public class SimpleImageComparer implements ImageComparer {
             totalDist += dist;
         }
         
+        DebugScreen.getInstance().setMsg(Double.toString(1d - (totalDist / numberOfPixels)));
         return 1d - (totalDist / numberOfPixels);
     }
 

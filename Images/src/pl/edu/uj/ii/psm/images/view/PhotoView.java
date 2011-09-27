@@ -36,6 +36,7 @@ public class PhotoView extends Form {
         this.append(actualPhoto);
         this.append(lastPhotoDate);
         this.append(savedPhotoDate);
+        this.append(countersString);
         
         this.addCommand(configCommand);
         this.addCommand(exitCommand);

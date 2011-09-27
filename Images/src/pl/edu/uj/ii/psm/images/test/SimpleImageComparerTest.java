@@ -10,7 +10,7 @@ import j2meunit.framework.TestMethod;
 import j2meunit.framework.TestSuite;
 import java.io.IOException;
 import javax.microedition.lcdui.Image;
-import pl.edu.uj.ii.SimpleImageComparer;
+import pl.edu.uj.ii.psm.images.model.ImageComparer;
 
 /**
  *
@@ -18,7 +18,7 @@ import pl.edu.uj.ii.SimpleImageComparer;
  */
 public class SimpleImageComparerTest extends TestCase {
     
-    private SimpleImageComparer comparer;
+    private ImageComparer comparer;
     
     public SimpleImageComparerTest() {
         
@@ -29,7 +29,7 @@ public class SimpleImageComparerTest extends TestCase {
     }
     
     public void setUp() {
-        comparer = new SimpleImageComparer(0);
+        comparer = new ImageComparer(0);
     }
     
     public void tearDown() {

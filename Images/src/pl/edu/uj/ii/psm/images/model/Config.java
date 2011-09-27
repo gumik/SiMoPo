@@ -17,6 +17,8 @@ public class Config {
     private static final String SIMILARITY_FACTOR_KEY = "similarity";
     private static final String PATH_KEY = "path";
     
+    private ConfigListener listener;
+    
     private Config() {
         
     }
@@ -36,6 +38,10 @@ public class Config {
         }
         
         ConfigStorage.getInstance().set(RECORD_STORE_NAME, DELAY_KEY, delay);
+        
+        if (listener != null) {
+            listener.DelayChanged(delay);
+        }
     }
     
     public int getDelay() throws RecordStoreFullException {
@@ -56,6 +62,10 @@ public class Config {
         
         ConfigStorage.getInstance().set(RECORD_STORE_NAME, 
                 SIMILARITY_FACTOR_KEY, (int)(value * 100));
+        
+        if (listener != null) {
+            listener.SimilarityFactorChanged(value);
+        }
     }
     
     public double getSimilarityFactor() throws RecordStoreFullException {
@@ -65,9 +75,17 @@ public class Config {
     
     public void setPath(String value) throws RecordStoreFullException {
         ConfigStorage.getInstance().set(RECORD_STORE_NAME, PATH_KEY, value);
+        
+        if (listener != null) {
+            listener.PathChanged(value);
+        }
     }
     
     public String getPath() throws RecordStoreFullException {
         return ConfigStorage.getInstance().get(RECORD_STORE_NAME, PATH_KEY, "");
+    }
+    
+    public void setListener(ConfigListener listener) {
+        this.listener = listener;
     }
 }

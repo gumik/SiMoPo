@@ -15,10 +15,10 @@ import javax.microedition.media.control.VideoControl;
  *
  * @author gumik
  */
-public class PhotoThread extends Thread {
+public class PhotoThread {
     
     
-    public void run() {
+    private void threadMethod() {
         if (listener != null) {
             listener.started();
         }
@@ -26,9 +26,9 @@ public class PhotoThread extends Thread {
         while (run) {
             try {
                 byte[] snapshot = getVideoControl().getSnapshot(null);
-                Image image = Image.createImage(snapshot, 0, snapshot.length);
+//                Image image = Image.createImage(snapshot, 0, snapshot.length);
                 if (listener != null) {
-                    listener.photoReceived(image);
+                    listener.photoReceived(snapshot);
                 }
             } catch (Exception ex) {
                 notifyError(ex);
@@ -54,7 +54,11 @@ public class PhotoThread extends Thread {
         }
         
         run = true;
-        super.start();
+        new Thread() {
+            public void run() {
+                threadMethod();
+            }
+        }.start();
     }
     
     public void stop() {
