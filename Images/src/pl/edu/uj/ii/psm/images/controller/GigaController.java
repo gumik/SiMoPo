@@ -266,13 +266,6 @@ public class GigaController {
 
             public void startPressed() {
                 photoViewStartPressed();
-                Display.getDisplay(midlet).setCurrent(DebugScreen.getInstance());
-                DebugScreen.getInstance().setCommandListener(new CommandListener() {
-
-                    public void commandAction(Command cmnd, Displayable dsplbl) {
-                        Display.getDisplay(midlet).setCurrent(photoView);
-                    }
-                });
             }
 
             public void stopPressed() {
@@ -306,6 +299,8 @@ public class GigaController {
                 photoSaverAllCountChanged(count);
             }
         });
+        
+        photoSaver.startBluetooth();
     }
 
     private void photoPhotoReceived(byte[] photo) {
