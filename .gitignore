@@ -3,3 +3,7 @@
 */dist
 Images/src/j2meunit
 */nbproject/private
+*/*/bin
+*/*/obj
+*.csproj.user
+*.suo
