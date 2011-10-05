@@ -1,6 +1,6 @@
 ﻿namespace AutomaticMessages
 {
-    partial class Form1
+    partial class MessageForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,34 +30,44 @@
         private void InitializeComponent()
         {
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.messageTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // listBox1
+            // nameTextBox
             // 
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(234, 254);
-            this.listBox1.TabIndex = 0;
+            this.nameTextBox.Location = new System.Drawing.Point(3, 3);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(234, 21);
+            this.nameTextBox.TabIndex = 0;
             // 
-            // Form1
+            // messageTextBox
+            // 
+            this.messageTextBox.Location = new System.Drawing.Point(3, 30);
+            this.messageTextBox.Multiline = true;
+            this.messageTextBox.Name = "messageTextBox";
+            this.messageTextBox.Size = new System.Drawing.Size(234, 235);
+            this.messageTextBox.TabIndex = 1;
+            // 
+            // MessageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.messageTextBox);
+            this.Controls.Add(this.nameTextBox);
             this.Menu = this.mainMenu1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MessageForm";
+            this.Text = "MessageForm";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.TextBox messageTextBox;
 
     }
 }
-
