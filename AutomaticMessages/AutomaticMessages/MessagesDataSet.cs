@@ -6,7 +6,7 @@
 
         public partial class MessagesDataTable
         {
-            public void AddMessagesRow()
+            public MessagesRow AddMessagesRow()
             {
                 var messageName = "new message";
 
@@ -15,7 +15,7 @@
                     messageName = String.Format("new message {0}", ++newMessageCounter);
                 }
 
-                AddMessagesRow(messageName, "");
+                return AddMessagesRow(messageName, "");
             }
 
             private int newMessageCounter;

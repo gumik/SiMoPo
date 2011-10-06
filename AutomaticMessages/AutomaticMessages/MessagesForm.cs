@@ -16,23 +16,15 @@ namespace AutomaticMessages
             InitializeComponent();
         }
 
-        private void MessagesForm_Load(object sender, EventArgs e)
+        protected override void OnClosed(EventArgs e)
         {
-            // TODO: This line of code loads data into the 'messagesDataSet.Messages' table. You can move, or remove it, as needed.
-            this.messagesTableAdapter.Fill(this.messagesDataSet.Messages);
+            base.OnClosed(e);
 
-            //messagesDataSet.Messages.AddMessagesRow("nazwa", "tresc wiadomosci");
-            //messagesDataSet.Messages.AddMessagesRow("nazwa2", "trescasdf wiadomosci");
-            //messagesDataSet.Messages.AddMessagesRow("nazwa3", "tresc f da wiadomosci");
-        }
+            if (DialogResult != DialogResult.OK)
+            {
+                return;
+            }
 
-        private void addMenuItem_Click(object sender, EventArgs e)
-        {
-            messagesDataSet.Messages.AddMessagesRow();
-        }
-
-        private void okMenuItem_Click(object sender, EventArgs e)
-        {
             var changes = messagesDataSet.GetChanges();
             if (changes != null)
             {
@@ -40,25 +32,10 @@ namespace AutomaticMessages
                 messagesDataSet.Merge(changes);
                 messagesDataSet.AcceptChanges();
             }
-
-            DialogResult = DialogResult.OK;
         }
 
-        private void cancelMenuItem_Click(object sender, EventArgs e)
+        private static void EditRow(MessagesDataSet.MessagesRow current)
         {
-            DialogResult = DialogResult.Cancel;
-        }
-
-        private void menuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void editMenuItem_Click(object sender, EventArgs e)
-        {
-            var dataRowView = messagesBindingSource.Current as DataRowView;
-            var current = dataRowView.Row as MessagesDataSet.MessagesRow;
-
             var messageForm = new MessageForm()
             {
                 MessageName = current.Name,
@@ -71,6 +48,40 @@ namespace AutomaticMessages
                 current.Name = messageForm.MessageName;
                 current.Text = messageForm.MessageText;
             }
+        }
+
+        private void MessagesForm_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'messagesDataSet.Messages' table. You can move, or remove it, as needed.
+            this.messagesTableAdapter.Fill(this.messagesDataSet.Messages);
+        }
+
+        private void addMenuItem_Click(object sender, EventArgs e)
+        {
+            var addedRow = messagesDataSet.Messages.AddMessagesRow();
+            EditRow(addedRow);
+        }
+
+        private void okMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
+        private void cancelMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
+
+        private void editMenuItem_Click(object sender, EventArgs e)
+        {
+            var dataRowView = messagesBindingSource.Current as DataRowView;
+            var current = dataRowView.Row as MessagesDataSet.MessagesRow;
+            EditRow(current);
+        }
+
+        private void deleteMenuItem_Click(object sender, EventArgs e)
+        {            
+            (messagesBindingSource.Current as DataRowView).Row.Delete();
         }
     }
 }

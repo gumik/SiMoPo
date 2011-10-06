@@ -32,17 +32,16 @@
             this.components = new System.ComponentModel.Container();
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.addMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem = new System.Windows.Forms.MenuItem();
-            this.okMenuItem = new System.Windows.Forms.MenuItem();
             this.cancelMenuItem = new System.Windows.Forms.MenuItem();
             this.messagesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.messagesDataSet = new AutomaticMessages.MessagesDataSet();
             this.namesListBox = new System.Windows.Forms.ListBox();
+            this.contextMenu = new System.Windows.Forms.ContextMenu();
+            this.addContextMenuItem = new System.Windows.Forms.MenuItem();
+            this.editContextMenuItem = new System.Windows.Forms.MenuItem();
+            this.deleteContextMenuItem = new System.Windows.Forms.MenuItem();
             this.messageTextBox = new System.Windows.Forms.TextBox();
             this.messagesTableAdapter = new AutomaticMessages.MessagesDataSetTableAdapters.MessagesTableAdapter();
-            this.contextMenu = new System.Windows.Forms.ContextMenu();
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.editMenuItem = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.messagesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.messagesDataSet)).BeginInit();
             this.SuspendLayout();
@@ -50,23 +49,12 @@
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.Add(this.addMenuItem);
-            this.mainMenu1.MenuItems.Add(this.menuItem);
+            this.mainMenu1.MenuItems.Add(this.cancelMenuItem);
             // 
             // addMenuItem
             // 
             this.addMenuItem.Text = "Add";
             this.addMenuItem.Click += new System.EventHandler(this.addMenuItem_Click);
-            // 
-            // menuItem
-            // 
-            this.menuItem.MenuItems.Add(this.okMenuItem);
-            this.menuItem.MenuItems.Add(this.cancelMenuItem);
-            this.menuItem.Text = "Menu";
-            // 
-            // okMenuItem
-            // 
-            this.okMenuItem.Text = "OK";
-            this.okMenuItem.Click += new System.EventHandler(this.okMenuItem_Click);
             // 
             // cancelMenuItem
             // 
@@ -95,6 +83,27 @@
             this.namesListBox.TabIndex = 0;
             this.namesListBox.ValueMember = "Text";
             // 
+            // contextMenu
+            // 
+            this.contextMenu.MenuItems.Add(this.addContextMenuItem);
+            this.contextMenu.MenuItems.Add(this.editContextMenuItem);
+            this.contextMenu.MenuItems.Add(this.deleteContextMenuItem);
+            // 
+            // addContextMenuItem
+            // 
+            this.addContextMenuItem.Text = "Add";
+            this.addContextMenuItem.Click += new System.EventHandler(this.addMenuItem_Click);
+            // 
+            // editContextMenuItem
+            // 
+            this.editContextMenuItem.Text = "Edit";
+            this.editContextMenuItem.Click += new System.EventHandler(this.editMenuItem_Click);
+            // 
+            // deleteContextMenuItem
+            // 
+            this.deleteContextMenuItem.Text = "Delete";
+            this.deleteContextMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
+            // 
             // messageTextBox
             // 
             this.messageTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.messagesBindingSource, "Text", true));
@@ -108,21 +117,6 @@
             // messagesTableAdapter
             // 
             this.messagesTableAdapter.ClearBeforeFill = true;
-            // 
-            // contextMenu
-            // 
-            this.contextMenu.MenuItems.Add(this.menuItem1);
-            this.contextMenu.MenuItems.Add(this.editMenuItem);
-            // 
-            // menuItem1
-            // 
-            this.menuItem1.Text = "Add";
-            this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
-            // 
-            // editMenuItem
-            // 
-            this.editMenuItem.Text = "Edit";
-            this.editMenuItem.Click += new System.EventHandler(this.editMenuItem_Click);
             // 
             // MessagesForm
             // 
@@ -149,12 +143,11 @@
         private MessagesDataSet messagesDataSet;
         private System.Windows.Forms.BindingSource messagesBindingSource;
         private AutomaticMessages.MessagesDataSetTableAdapters.MessagesTableAdapter messagesTableAdapter;
-        private System.Windows.Forms.MenuItem okMenuItem;
-        private System.Windows.Forms.MenuItem menuItem;
         private System.Windows.Forms.MenuItem addMenuItem;
         private System.Windows.Forms.MenuItem cancelMenuItem;
         private System.Windows.Forms.ContextMenu contextMenu;
-        private System.Windows.Forms.MenuItem menuItem1;
-        private System.Windows.Forms.MenuItem editMenuItem;
+        private System.Windows.Forms.MenuItem addContextMenuItem;
+        private System.Windows.Forms.MenuItem editContextMenuItem;
+        private System.Windows.Forms.MenuItem deleteContextMenuItem;
     }
 }
