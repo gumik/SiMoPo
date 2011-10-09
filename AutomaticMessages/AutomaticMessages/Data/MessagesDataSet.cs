@@ -1,4 +1,5 @@
-﻿namespace AutomaticMessages {
+﻿namespace AutomaticMessages.Data 
+{
     using System.Linq;
     using System;    
     

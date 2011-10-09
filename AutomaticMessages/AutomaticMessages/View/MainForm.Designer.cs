@@ -32,12 +32,14 @@
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.messagesMenuItem = new System.Windows.Forms.MenuItem();
+            this.numbersMenuItem = new System.Windows.Forms.MenuItem();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.Add(this.exitMenuItem);
-            this.mainMenu1.MenuItems.Add(this.messagesMenuItem);
+            this.mainMenu1.MenuItems.Add(this.menuItem1);
             // 
             // exitMenuItem
             // 
@@ -48,6 +50,17 @@
             // 
             this.messagesMenuItem.Text = "Messages";
             this.messagesMenuItem.Click += new System.EventHandler(this.messagesMenuItem_Click);
+            // 
+            // numbersMenuItem
+            // 
+            this.numbersMenuItem.Text = "Numbers";
+            this.numbersMenuItem.Click += new System.EventHandler(this.numbersMenuItem_Click);
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.MenuItems.Add(this.messagesMenuItem);
+            this.menuItem1.MenuItems.Add(this.numbersMenuItem);
+            this.menuItem1.Text = "Menu";
             // 
             // MainForm
             // 
@@ -66,5 +79,7 @@
 
         private System.Windows.Forms.MenuItem exitMenuItem;
         private System.Windows.Forms.MenuItem messagesMenuItem;
+        private System.Windows.Forms.MenuItem numbersMenuItem;
+        private System.Windows.Forms.MenuItem menuItem1;
     }
 }

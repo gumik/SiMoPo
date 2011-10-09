@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using AutomaticMessages.Data;
 
 namespace AutomaticMessages
 {
@@ -41,13 +42,26 @@ namespace AutomaticMessages
                 MessageName = current.Name,
                 MessageText = current.Text,
             };
-            var result = messageForm.ShowDialog();
 
-            if (result == DialogResult.OK)
-            {
-                current.Name = messageForm.MessageName;
-                current.Text = messageForm.MessageText;
-            }
+            messageForm.Closing += (sender, args) => {
+                if (messageForm.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                try
+                {
+                    current.Name = messageForm.MessageName;
+                    current.Text = messageForm.MessageText;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    args.Cancel = true;
+                }
+            };
+
+            messageForm.ShowDialog();
         }
 
         private void MessagesForm_Load(object sender, EventArgs e)

@@ -45,6 +45,7 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsCE.Forms" />
     <Reference Include="Microsoft.WindowsMobile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.WindowsMobile.Status, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.WindowsMobile.Telephony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
@@ -62,44 +63,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
+    <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="View\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MessagesDataSet.cs">
+    <Compile Include="Data\MessagesDataSet.cs">
       <DependentUpon>MessagesDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="MessagesDataSet.Designer.cs">
+    <Compile Include="Data\MessagesDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MessagesDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="IncomingsParser.cs" />
-    <Compile Include="MessageForm.cs">
+    <Compile Include="Model\IncomingsParser.cs" />
+    <Compile Include="View\MessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MessageForm.Designer.cs">
+    <Compile Include="View\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MessagesForm.cs">
+    <Compile Include="View\MessagesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MessagesForm.Designer.cs">
+    <Compile Include="View\MessagesForm.Designer.cs">
       <DependentUpon>MessagesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MessageForm.resx">
+    <EmbeddedResource Include="View\MessageForm.resx">
       <DependentUpon>MessageForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MessagesForm.resx">
+    <EmbeddedResource Include="View\MessagesForm.resx">
       <DependentUpon>MessagesForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -108,26 +109,45 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\NumberForm.resx">
+      <DependentUpon>NumberForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\NumbersForm.resx">
+      <DependentUpon>NumbersForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="View\NumberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\NumberForm.Designer.cs">
+      <DependentUpon>NumberForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\NumbersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\NumbersForm.Designer.cs">
+      <DependentUpon>NumbersForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ConfigDb.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MessagesDataSet.xsc">
+    <None Include="Data\MessagesDataSet.xsc">
       <DependentUpon>MessagesDataSet.xsd</DependentUpon>
     </None>
-    <None Include="MessagesDataSet.xsd">
+    <None Include="Data\MessagesDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>MessagesDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="MessagesDataSet.xss">
+    <None Include="Data\MessagesDataSet.xss">
       <DependentUpon>MessagesDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>

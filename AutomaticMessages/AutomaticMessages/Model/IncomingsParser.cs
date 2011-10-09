@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.WindowsMobile.Status;
 using System.Threading;
 
-namespace AutomaticMessages
+namespace AutomaticMessages.Model
 {
     class IncomingsParser
     {

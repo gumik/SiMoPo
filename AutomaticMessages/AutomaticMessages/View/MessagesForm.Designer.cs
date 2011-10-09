@@ -34,14 +34,16 @@
             this.addMenuItem = new System.Windows.Forms.MenuItem();
             this.cancelMenuItem = new System.Windows.Forms.MenuItem();
             this.messagesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.messagesDataSet = new AutomaticMessages.MessagesDataSet();
+            this.messagesDataSet = new AutomaticMessages.Data.MessagesDataSet();
             this.namesListBox = new System.Windows.Forms.ListBox();
             this.contextMenu = new System.Windows.Forms.ContextMenu();
             this.addContextMenuItem = new System.Windows.Forms.MenuItem();
             this.editContextMenuItem = new System.Windows.Forms.MenuItem();
             this.deleteContextMenuItem = new System.Windows.Forms.MenuItem();
             this.messageTextBox = new System.Windows.Forms.TextBox();
-            this.messagesTableAdapter = new AutomaticMessages.MessagesDataSetTableAdapters.MessagesTableAdapter();
+            this.messagesTableAdapter = new AutomaticMessages.Data.MessagesDataSetTableAdapters.MessagesTableAdapter();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.messagesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.messagesDataSet)).BeginInit();
             this.SuspendLayout();
@@ -74,12 +76,14 @@
             // 
             // namesListBox
             // 
+            this.namesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.namesListBox.ContextMenu = this.contextMenu;
             this.namesListBox.DataSource = this.messagesBindingSource;
             this.namesListBox.DisplayMember = "Name";
-            this.namesListBox.Location = new System.Drawing.Point(3, 3);
+            this.namesListBox.Location = new System.Drawing.Point(3, 23);
             this.namesListBox.Name = "namesListBox";
-            this.namesListBox.Size = new System.Drawing.Size(234, 100);
+            this.namesListBox.Size = new System.Drawing.Size(234, 72);
             this.namesListBox.TabIndex = 0;
             this.namesListBox.ValueMember = "Text";
             // 
@@ -106,17 +110,38 @@
             // 
             // messageTextBox
             // 
+            this.messageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.messageTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.messagesBindingSource, "Text", true));
-            this.messageTextBox.Location = new System.Drawing.Point(3, 109);
+            this.messageTextBox.Location = new System.Drawing.Point(3, 121);
             this.messageTextBox.Multiline = true;
             this.messageTextBox.Name = "messageTextBox";
             this.messageTextBox.ReadOnly = true;
-            this.messageTextBox.Size = new System.Drawing.Size(234, 156);
+            this.messageTextBox.Size = new System.Drawing.Size(234, 144);
             this.messageTextBox.TabIndex = 1;
             // 
             // messagesTableAdapter
             // 
             this.messagesTableAdapter.ClearBeforeFill = true;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(234, 20);
+            this.label1.Text = "Messages:";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Location = new System.Drawing.Point(3, 98);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(234, 20);
+            this.label2.Text = "Message text:";
             // 
             // MessagesForm
             // 
@@ -124,6 +149,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.messageTextBox);
             this.Controls.Add(this.namesListBox);
             this.Menu = this.mainMenu1;
@@ -140,14 +167,16 @@
 
         private System.Windows.Forms.ListBox namesListBox;
         private System.Windows.Forms.TextBox messageTextBox;
-        private MessagesDataSet messagesDataSet;
+        private Data.MessagesDataSet messagesDataSet;
         private System.Windows.Forms.BindingSource messagesBindingSource;
-        private AutomaticMessages.MessagesDataSetTableAdapters.MessagesTableAdapter messagesTableAdapter;
+        private AutomaticMessages.Data.MessagesDataSetTableAdapters.MessagesTableAdapter messagesTableAdapter;
         private System.Windows.Forms.MenuItem addMenuItem;
         private System.Windows.Forms.MenuItem cancelMenuItem;
         private System.Windows.Forms.ContextMenu contextMenu;
         private System.Windows.Forms.MenuItem addContextMenuItem;
         private System.Windows.Forms.MenuItem editContextMenuItem;
         private System.Windows.Forms.MenuItem deleteContextMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
