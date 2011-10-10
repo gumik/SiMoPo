@@ -27,5 +27,10 @@ namespace AutomaticMessages
             get { return messageTextBox.Text; }
             set { messageTextBox.Text = value; }
         }
+
+        private void cancelMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
     }
 }

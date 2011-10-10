@@ -630,7 +630,6 @@ namespace AutomaticMessages.Data {
                                 this.columnNumber}, true));
                 this.columnNumber.AllowDBNull = false;
                 this.columnNumber.Unique = true;
-                this.columnNumber.MaxLength = 15;
                 this.columnMessageId.AllowDBNull = false;
             }
             

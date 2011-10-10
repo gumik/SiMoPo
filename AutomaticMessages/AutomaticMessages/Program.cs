@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using AutomaticMessages.Model;
 
 namespace AutomaticMessages
 {
@@ -12,7 +13,7 @@ namespace AutomaticMessages
         /// </summary>
         [MTAThread]
         static void Main()
-        {
+        {            
             Application.Run(new MainForm());
         }
     }

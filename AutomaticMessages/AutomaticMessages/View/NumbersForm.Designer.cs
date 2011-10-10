@@ -32,7 +32,6 @@
             this.components = new System.ComponentModel.Container();
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.addMenuItem = new System.Windows.Forms.MenuItem();
-            this.cancelMenuItem = new System.Windows.Forms.MenuItem();
             this.numbersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.messagesDataSet = new AutomaticMessages.Data.MessagesDataSet();
             this.numbersListBox = new System.Windows.Forms.ListBox();
@@ -47,6 +46,9 @@
             this.messagesTableAdapter = new AutomaticMessages.Data.MessagesDataSetTableAdapters.MessagesTableAdapter();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.menuItem = new System.Windows.Forms.MenuItem();
+            this.editMenuItem = new System.Windows.Forms.MenuItem();
+            this.deleteMenuItem = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numbersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.messagesDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.messagesBindingSource)).BeginInit();
@@ -55,17 +57,12 @@
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.Add(this.addMenuItem);
-            this.mainMenu1.MenuItems.Add(this.cancelMenuItem);
+            this.mainMenu1.MenuItems.Add(this.menuItem);
             // 
             // addMenuItem
             // 
             this.addMenuItem.Text = "Add";
             this.addMenuItem.Click += new System.EventHandler(this.addMenuItem_Click);
-            // 
-            // cancelMenuItem
-            // 
-            this.cancelMenuItem.Text = "Cancel";
-            this.cancelMenuItem.Click += new System.EventHandler(this.cancelMenuItem_Click);
             // 
             // numbersBindingSource
             // 
@@ -107,12 +104,12 @@
             // editContextMenuItem
             // 
             this.editContextMenuItem.Text = "Edit";
-            this.editContextMenuItem.Click += new System.EventHandler(this.editContextMenuItem_Click);
+            this.editContextMenuItem.Click += new System.EventHandler(this.editMenuItem_Click);
             // 
             // deleteContextMenuItem
             // 
             this.deleteContextMenuItem.Text = "Delete";
-            this.deleteContextMenuItem.Click += new System.EventHandler(this.deleteContextMenuItem_Click);
+            this.deleteContextMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
             // 
             // messageNameTextBox
             // 
@@ -169,6 +166,22 @@
             this.label2.Size = new System.Drawing.Size(234, 20);
             this.label2.Text = "Message for selected:";
             // 
+            // menuItem
+            // 
+            this.menuItem.MenuItems.Add(this.editMenuItem);
+            this.menuItem.MenuItems.Add(this.deleteMenuItem);
+            this.menuItem.Text = "Menu";
+            // 
+            // editMenuItem
+            // 
+            this.editMenuItem.Text = "Edit";
+            this.editMenuItem.Click += new System.EventHandler(this.editMenuItem_Click);
+            // 
+            // deleteMenuItem
+            // 
+            this.deleteMenuItem.Text = "Delete";
+            this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
+            // 
             // NumbersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -195,7 +208,6 @@
 
         private System.Windows.Forms.ListBox numbersListBox;
         private System.Windows.Forms.MenuItem addMenuItem;
-        private System.Windows.Forms.MenuItem cancelMenuItem;
         private System.Windows.Forms.ContextMenu contextMenu;
         private System.Windows.Forms.MenuItem addContextMenuItem;
         private System.Windows.Forms.MenuItem editContextMenuItem;
@@ -209,6 +221,9 @@
         private AutomaticMessages.Data.MessagesDataSetTableAdapters.MessagesTableAdapter messagesTableAdapter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.MenuItem menuItem;
+        private System.Windows.Forms.MenuItem editMenuItem;
+        private System.Windows.Forms.MenuItem deleteMenuItem;
 
     }
 }

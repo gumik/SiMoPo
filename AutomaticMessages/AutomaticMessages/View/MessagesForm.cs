@@ -17,25 +17,7 @@ namespace AutomaticMessages
             InitializeComponent();
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            if (DialogResult != DialogResult.OK)
-            {
-                return;
-            }
-
-            var changes = messagesDataSet.GetChanges();
-            if (changes != null)
-            {
-                messagesTableAdapter.Update(changes as MessagesDataSet);
-                messagesDataSet.Merge(changes);
-                messagesDataSet.AcceptChanges();
-            }
-        }
-
-        private static void EditRow(MessagesDataSet.MessagesRow current)
+        private void EditRow(MessagesDataSet.MessagesRow current)
         {
             var messageForm = new MessageForm()
             {
@@ -53,15 +35,30 @@ namespace AutomaticMessages
                 {
                     current.Name = messageForm.MessageName;
                     current.Text = messageForm.MessageText;
-                }
+                    CommitChanges();
+                }                
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show(String.Format("Error {0}", e.GetType()), "Error", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Hand, 
+                        MessageBoxDefaultButton.Button1);
                     args.Cancel = true;
                 }
             };
 
             messageForm.ShowDialog();
+        }
+
+        private void CommitChanges()
+        {
+            var changes = messagesDataSet.GetChanges();
+            if (changes != null)
+            {
+                messagesTableAdapter.Update(changes as MessagesDataSet);  
+                messagesDataSet.Merge(changes);
+                messagesDataSet.AcceptChanges();
+                messagesTableAdapter.Fill(messagesDataSet.Messages);
+            }
         }
 
         private void MessagesForm_Load(object sender, EventArgs e)
@@ -94,8 +91,9 @@ namespace AutomaticMessages
         }
 
         private void deleteMenuItem_Click(object sender, EventArgs e)
-        {            
-            (messagesBindingSource.Current as DataRowView).Row.Delete();
+        {
+            (messagesBindingSource.Current as DataRowView).Delete();            
+            CommitChanges();
         }
     }
 }

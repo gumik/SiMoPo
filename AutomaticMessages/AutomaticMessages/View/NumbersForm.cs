@@ -23,59 +23,103 @@ namespace AutomaticMessages.View
             this.numbersTableAdapter.Fill(this.messagesDataSet.Numbers);
         }
 
-        protected override void OnClosed(EventArgs e)
+        private void CommitChanges()
         {
-            base.OnClosed(e);
-
-            if (DialogResult != DialogResult.OK)
-            {
-                return;
-            }
-
             var changes = messagesDataSet.GetChanges();
             if (changes != null)
             {
                 numbersTableAdapter.Update(changes as MessagesDataSet);
-                //messagesTableAdapter.Update(changes as MessagesDataSet);
+                messagesTableAdapter.Update(changes as MessagesDataSet);
                 messagesDataSet.Merge(changes);
                 messagesDataSet.AcceptChanges();
+                numbersTableAdapter.Fill(messagesDataSet.Numbers);
             }
         }
 
-        private void addMenuItem_Click(object sender, EventArgs e)
+        private void ShowEditForm(NumberForm numberForm, Action method)
+        {
+            numberForm.Closing += (_, args) =>
+            {
+                if (numberForm.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                try
+                {
+                    method();
+                    CommitChanges();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(String.Format("Error {0}", e.GetType()), "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Hand,
+                        MessageBoxDefaultButton.Button1);
+                    args.Cancel = true;
+                }
+            };
+
+            numberForm.ShowDialog();
+        }
+
+        private void addMenuItem_Click(object sender, EventArgs __)
         {
             var numberForm = new NumberForm();
-            var result = numberForm.ShowDialog();
-
-            if (result == DialogResult.OK)
-            {
+            ShowEditForm(numberForm, () =>
                 messagesDataSet.Numbers.AddNumbersRow(
-                    numberForm.Number, numberForm.MessagesRow);
-            }
+                    numberForm.Number, numberForm.MessagesRow));
         }
 
-        private void cancelMenuItem_Click(object sender, EventArgs e)
+        private void cancelMenuItem_Click(object sender, EventArgs __)
         {
             DialogResult = DialogResult.Cancel;
         }
 
-        private void editContextMenuItem_Click(object sender, EventArgs e)
+        private void editMenuItem_Click(object sender, EventArgs __)
         {
             var dataRowView = numbersBindingSource.Current as DataRowView;
             var current = dataRowView.Row as MessagesDataSet.NumbersRow;
 
             var numberForm = new NumberForm() { Number = current.Number, MessageId = current.MessageId };
-            var result = numberForm.ShowDialog();
 
-            if (result == DialogResult.OK)
+            //ShowEditForm(numberForm, () =>
+            //{
+            //    current.Number = numberForm.Number;
+            //    current.MessageId = numberForm.MessageId;
+            //    UpdateMessageBindingPosition();
+            //});
+
+            numberForm.Closing += (_, args) =>
             {
-                current.Number = numberForm.Number;
-                current.MessageId = numberForm.MessageId;
-                UpdateMessageBindingPosition();
-            }
+                if (numberForm.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                try
+                {
+                    current.Number = numberForm.Number;
+                    current.MessageId = numberForm.MessageId;
+                    //UpdateMessageBindingPosition();
+                    CommitChanges();
+                }
+                catch (ConstraintException e)
+                {
+                    // ignore it
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(String.Format("Error {0}", e.GetType()), "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Hand,
+                        MessageBoxDefaultButton.Button1);
+                    args.Cancel = true;
+                }
+            };
+
+            numberForm.ShowDialog();
         }
 
-        private void deleteContextMenuItem_Click(object sender, EventArgs e)
+        private void deleteMenuItem_Click(object sender, EventArgs e)
         {
             (numbersBindingSource.Current as DataRowView).Delete();
         }

@@ -29,19 +29,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
+            this.cancelMenuItem = new System.Windows.Forms.MenuItem();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.messageTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.inputPanel = new Microsoft.WindowsCE.Forms.InputPanel();
+            this.inputPanel = new Microsoft.WindowsCE.Forms.InputPanel(this.components);
             this.SuspendLayout();
+            // 
+            // mainMenu1
+            // 
+            this.mainMenu1.MenuItems.Add(this.cancelMenuItem);
+            // 
+            // cancelMenuItem
+            // 
+            this.cancelMenuItem.Text = "Cancel";
+            this.cancelMenuItem.Click += new System.EventHandler(this.cancelMenuItem_Click);
             // 
             // nameTextBox
             // 
             this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.nameTextBox.Location = new System.Drawing.Point(3, 23);
+            this.nameTextBox.MaxLength = 16;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(234, 21);
             this.nameTextBox.TabIndex = 0;
@@ -52,6 +64,7 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.messageTextBox.Location = new System.Drawing.Point(3, 70);
+            this.messageTextBox.MaxLength = 160;
             this.messageTextBox.Multiline = true;
             this.messageTextBox.Name = "messageTextBox";
             this.messageTextBox.Size = new System.Drawing.Size(234, 195);
@@ -103,6 +116,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private Microsoft.WindowsCE.Forms.InputPanel inputPanel;
+        private System.Windows.Forms.MenuItem cancelMenuItem;
 
     }
 }

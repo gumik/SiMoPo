@@ -48,6 +48,7 @@
             this.numberTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.numberTextBox.Location = new System.Drawing.Point(3, 23);
+            this.numberTextBox.MaxLength = 15;
             this.numberTextBox.Name = "numberTextBox";
             this.numberTextBox.Size = new System.Drawing.Size(234, 21);
             this.numberTextBox.TabIndex = 0;

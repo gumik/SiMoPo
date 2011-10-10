@@ -31,9 +31,10 @@
         {
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.messagesMenuItem = new System.Windows.Forms.MenuItem();
             this.numbersMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.testTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -46,6 +47,12 @@
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
+            // menuItem1
+            // 
+            this.menuItem1.MenuItems.Add(this.messagesMenuItem);
+            this.menuItem1.MenuItems.Add(this.numbersMenuItem);
+            this.menuItem1.Text = "Menu";
+            // 
             // messagesMenuItem
             // 
             this.messagesMenuItem.Text = "Messages";
@@ -56,11 +63,13 @@
             this.numbersMenuItem.Text = "Numbers";
             this.numbersMenuItem.Click += new System.EventHandler(this.numbersMenuItem_Click);
             // 
-            // menuItem1
+            // testTextBox
             // 
-            this.menuItem1.MenuItems.Add(this.messagesMenuItem);
-            this.menuItem1.MenuItems.Add(this.numbersMenuItem);
-            this.menuItem1.Text = "Menu";
+            this.testTextBox.Location = new System.Drawing.Point(3, 3);
+            this.testTextBox.Multiline = true;
+            this.testTextBox.Name = "testTextBox";
+            this.testTextBox.Size = new System.Drawing.Size(234, 262);
+            this.testTextBox.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -68,6 +77,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.testTextBox);
             this.Menu = this.mainMenu1;
             this.Name = "MainForm";
             this.Text = "MainForm";
@@ -81,5 +91,6 @@
         private System.Windows.Forms.MenuItem messagesMenuItem;
         private System.Windows.Forms.MenuItem numbersMenuItem;
         private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.TextBox testTextBox;
     }
 }
