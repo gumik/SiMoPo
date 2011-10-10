@@ -513,6 +513,8 @@ namespace AutomaticMessages.Data {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class NumbersDataTable : global::System.Data.TypedTableBase<NumbersRow> {
             
+            private global::System.Data.DataColumn columnNumberId;
+            
             private global::System.Data.DataColumn columnNumber;
             
             private global::System.Data.DataColumn columnMessageId;
@@ -539,6 +541,13 @@ namespace AutomaticMessages.Data {
                 }
                 this.Prefix = table.Prefix;
                 this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn NumberIdColumn {
+                get {
+                    return this.columnNumberId;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -586,10 +595,11 @@ namespace AutomaticMessages.Data {
             public NumbersRow AddNumbersRow(string Number, MessagesRow parentMessagesRowBymessages_numbers) {
                 NumbersRow rowNumbersRow = ((NumbersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
+                        null,
                         Number,
                         null};
                 if ((parentMessagesRowBymessages_numbers != null)) {
-                    columnValuesArray[1] = parentMessagesRowBymessages_numbers[0];
+                    columnValuesArray[2] = parentMessagesRowBymessages_numbers[0];
                 }
                 rowNumbersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowNumbersRow);
@@ -597,9 +607,9 @@ namespace AutomaticMessages.Data {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public NumbersRow FindByNumber(string Number) {
+            public NumbersRow FindByNumberId(int NumberId) {
                 return ((NumbersRow)(this.Rows.Find(new object[] {
-                            Number})));
+                            NumberId})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -616,20 +626,32 @@ namespace AutomaticMessages.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             internal void InitVars() {
+                this.columnNumberId = base.Columns["NumberId"];
                 this.columnNumber = base.Columns["Number"];
                 this.columnMessageId = base.Columns["MessageId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             private void InitClass() {
+                this.columnNumberId = new global::System.Data.DataColumn("NumberId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNumberId);
                 this.columnNumber = new global::System.Data.DataColumn("Number", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNumber);
                 this.columnMessageId = new global::System.Data.DataColumn("MessageId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMessageId);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnNumber}, true));
+                                this.columnNumber}, false));
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint2", new global::System.Data.DataColumn[] {
+                                this.columnNumberId}, true));
+                this.columnNumberId.AutoIncrement = true;
+                this.columnNumberId.AutoIncrementSeed = -1;
+                this.columnNumberId.AutoIncrementStep = -1;
+                this.columnNumberId.AllowDBNull = false;
+                this.columnNumberId.ReadOnly = true;
+                this.columnNumberId.Unique = true;
                 this.columnNumber.AllowDBNull = false;
                 this.columnNumber.Unique = true;
+                this.columnNumber.MaxLength = 15;
                 this.columnMessageId.AllowDBNull = false;
             }
             
@@ -813,6 +835,16 @@ namespace AutomaticMessages.Data {
             internal NumbersRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
                 this.tableNumbers = ((NumbersDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int NumberId {
+                get {
+                    return ((int)(this[this.tableNumbers.NumberIdColumn]));
+                }
+                set {
+                    this[this.tableNumbers.NumberIdColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1256,14 +1288,16 @@ namespace AutomaticMessages.Data.MessagesDataSetTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "Numbers";
+            tableMapping.ColumnMappings.Add("NumberId", "NumberId");
             tableMapping.ColumnMappings.Add("Number", "Number");
             tableMapping.ColumnMappings.Add("MessageId", "MessageId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Numbers] WHERE (([Number] = @p1))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Numbers] WHERE (([NumberId] = @p1) AND ([Number] = @p2))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Number", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "NumberId", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Number", global::System.Data.DataRowVersion.Original, null));
             this._adapter.InsertCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [Numbers] ([Number], [MessageId]) VALUES (@p1, @p2)";
@@ -1272,11 +1306,13 @@ namespace AutomaticMessages.Data.MessagesDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "MessageId", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [Numbers] SET [Number] = @p1, [MessageId] = @p2 WHERE (([Number] = @p3))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [Numbers] SET [Number] = @p1, [MessageId] = @p2 WHERE (([NumberId] = @p3) " +
+                "AND ([Number] = @p4))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Number", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "MessageId", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Number", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "NumberId", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Number", global::System.Data.DataRowVersion.Original, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1291,7 +1327,7 @@ namespace AutomaticMessages.Data.MessagesDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [Number], [MessageId] FROM [Numbers]";
+            this._commandCollection[0].CommandText = "SELECT [NumberId], [Number], [MessageId] FROM [Numbers]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1338,12 +1374,13 @@ namespace AutomaticMessages.Data.MessagesDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(string p1) {
-            if ((p1 == null)) {
-                throw new global::System.ArgumentNullException("p1");
+        public virtual int Delete(int p1, string p2) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
+            if ((p2 == null)) {
+                throw new global::System.ArgumentNullException("p2");
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[0].Value = ((string)(p1));
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(p2));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -1389,7 +1426,7 @@ namespace AutomaticMessages.Data.MessagesDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, int p2, string p3) {
+        public virtual int Update(string p1, int p2, int p3, string p4) {
             if ((p1 == null)) {
                 throw new global::System.ArgumentNullException("p1");
             }
@@ -1397,11 +1434,12 @@ namespace AutomaticMessages.Data.MessagesDataSetTableAdapters {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(p1));
             }
             this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(p2));
-            if ((p3 == null)) {
-                throw new global::System.ArgumentNullException("p3");
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
+            if ((p4 == null)) {
+                throw new global::System.ArgumentNullException("p4");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -1417,12 +1455,6 @@ namespace AutomaticMessages.Data.MessagesDataSetTableAdapters {
                     this.Adapter.UpdateCommand.Connection.Close();
                 }
             }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int p2, string p3) {
-            return this.Update(p3, p2, p3);
         }
     }
 }

@@ -29,7 +29,6 @@ namespace AutomaticMessages.View
             if (changes != null)
             {
                 numbersTableAdapter.Update(changes as MessagesDataSet);
-                messagesTableAdapter.Update(changes as MessagesDataSet);
                 messagesDataSet.Merge(changes);
                 messagesDataSet.AcceptChanges();
                 numbersTableAdapter.Fill(messagesDataSet.Numbers);
@@ -82,41 +81,41 @@ namespace AutomaticMessages.View
 
             var numberForm = new NumberForm() { Number = current.Number, MessageId = current.MessageId };
 
-            //ShowEditForm(numberForm, () =>
-            //{
-            //    current.Number = numberForm.Number;
-            //    current.MessageId = numberForm.MessageId;
-            //    UpdateMessageBindingPosition();
-            //});
-
-            numberForm.Closing += (_, args) =>
+            ShowEditForm(numberForm, () =>
             {
-                if (numberForm.DialogResult != DialogResult.OK)
-                {
-                    return;
-                }
+                current.Number = numberForm.Number;
+                current.MessageId = numberForm.MessageId;
+                //UpdateMessageBindingPosition();
+            });
 
-                try
-                {
-                    current.Number = numberForm.Number;
-                    current.MessageId = numberForm.MessageId;
-                    //UpdateMessageBindingPosition();
-                    CommitChanges();
-                }
-                catch (ConstraintException e)
-                {
-                    // ignore it
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(String.Format("Error {0}", e.GetType()), "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Hand,
-                        MessageBoxDefaultButton.Button1);
-                    args.Cancel = true;
-                }
-            };
+            //numberForm.Closing += (_, args) =>
+            //{
+            //    if (numberForm.DialogResult != DialogResult.OK)
+            //    {
+            //        return;
+            //    }
 
-            numberForm.ShowDialog();
+            //    try
+            //    {
+            //        current.Number = numberForm.Number;
+            //        current.MessageId = numberForm.MessageId;
+            //        //UpdateMessageBindingPosition();
+            //        CommitChanges();
+            //    }
+            //    catch (ConstraintException e)
+            //    {
+            //        // ignore it
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        MessageBox.Show(String.Format("Error {0}", e.GetType()), "Error",
+            //            MessageBoxButtons.OK, MessageBoxIcon.Hand,
+            //            MessageBoxDefaultButton.Button1);
+            //        args.Cancel = true;
+            //    }
+            //};
+
+            //numberForm.ShowDialog();
         }
 
         private void deleteMenuItem_Click(object sender, EventArgs e)
