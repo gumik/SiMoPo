@@ -13,7 +13,7 @@ namespace AutomaticMessages
         /// </summary>
         [MTAThread]
         static void Main()
-        {            
+        {
             Application.Run(new MainForm());
         }
     }
