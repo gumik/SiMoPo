@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\LogDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Logger.cs" />
     <Compile Include="Model\MessagesManager.cs" />
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
@@ -142,6 +148,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\LogDataSet.xsc">
+      <DependentUpon>LogDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Data\LogDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LogDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\LogDataSet.xss">
+      <DependentUpon>LogDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Data\MessagesDataSet.xsc">
       <DependentUpon>MessagesDataSet.xsd</DependentUpon>
     </None>
