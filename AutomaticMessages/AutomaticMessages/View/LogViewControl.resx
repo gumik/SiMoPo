@@ -117,31 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="logImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="numbersBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>369, 21</value>
-  </metadata>
-  <metadata name="messagesDataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>230, 21</value>
-  </metadata>
-  <metadata name="messagesBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>696, 21</value>
-  </metadata>
-  <metadata name="numbersTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>535, 21</value>
-  </metadata>
-  <metadata name="messagesTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>867, 21</value>
-  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="resource" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        R0lGODlhEAAQAPcAAP////QzJ/4mI/83Mv9DROtoWf8AAO89Pf4OD/+0tP+fn/2fnvsAAPa1rvycmv+o
+        p/7R0vmxsehFNf+vrf7g4OkAAOoBAffBuuLBweixq9IGCNqwsNQAAPwREtsMDPsVF+MWGNSZm9gDA+Jp
+        Y+lcWeK5uuWakcU1NOpbTupUR8+Ehf21tr8VGeOtqeNCRNV8efnNzNqIhPfm5fKFevgOCeAAAOUHB/3A
+        wdEVFeyZkeQAAO2tpOyyqf8AAfDb3PfDvetnaNAAAr9zc9Sfn/XV0MRLT84bGvOZmMN+fq80NfF9btYA
+        AP8DBeRsZ/akpPNydO/NyvsFA7s0Ns1gXbphYtA0L9EAAL8UFuujmePAwLliY/kCAPB4aN1AP/8CAuMj
+        JekFBfNnaeqSifSPkuRISf/LzeICAuB+dvlcX+yXjv8aHboiJvoPDe4AANEEBcgfI/E4OPQqH98AANJL
+        RvkWGf23ucteXbFDQ9EAAcxOUfrPzt+QiNElIuZVV9k8Occ7Oc11dd+wseRLReqVjM8LC/4AAP8FBtcA
+        AOwAAMRLS81ST/cHAvQAAPoAAP/O0PSIetIQFPmipPy+wM+LjcZ2d9EHCOickvjh3fRucP///wAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ACH5BAEAAJkALAAAAAAQABAAAAjwADMJzEQEi5gcaQbtuDSwoaUmTm44KiPpyAgeDTOd6RJpBQQKFCDU
+        GePHxMA9OIA8UgIDAAA9XGaQ4ZMhE5QqGkgUKPDD5YWdgoLMkRGDkJs+KSQ0cNlAAgoXVoy0UISHw5cD
+        ByK4jHAADohDlV78WSKnAh0aC1wuYNOhjQ4RU07UQNTIwCIHLh0wMFCIkRk7iSww6LEFgQKXChAgMGQA
+        DCAVNgxECUC5MmU1XjwE8nGFSRwBAh64fABawAcpAidBGsB6gssJrAmwKDGQ0hs0BBK4TEAgzJoQGYck
+        yYOJAIEnRe5kyThwgxAqWpBgyBgQADs=
+</value>
+  </data>
+  <data name="resource1" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        R0lGODlhEAAQAPcAAAR2BISmhASiBLTatFSaVESiRASOBFy6XKy+rNzi3GyqbOzy7CR6JIy+jESyRCSS
+        JASCBBy6HGyabKS+pASaBMzOzNzq3PT69BymHGSeZFSiVHy+fKzKrITKhFSyVBSGFBR+FASqBNTW1FSe
+        VHS2dDySPAR+BIS2hEymTASWBLS+tOTm5HymfPTy9EyyTASKBByaHOzq7Pz6/HTKdJTOlNTe1AR6BISu
+        hASmBFyWXESmRASSBFzCXKzCrNzm3HSmdITGhCyWLASGBCS6JHSedJzOnASeBFSqVLTKtIzOjFS2VBSK
+        FASuBFyeXDSeNPT29Ey2TOzu7Pz+/HzKfNTi1Ekt6RYGEgAAAEgMV2UABBUAOQAAfgAAMAAAiAAANgAA
+        fn5g/wBj/wBQ/8AA/wABKgAAiAAANgAAfv9gm/9juP9QNv8Afv+QAP/jAP8SAP8AAACYoADVnAA2RQB+
+        AABQTgAtLQAGBgAAAAAgDAAAABUAAAAAAFJKYIstngAFgAAAfMABKOIAMBIAFgACAJ8BAOsAAIEAAHwA
+        AErZB+OLAIE2AHx+AMCIAHYAAFA8AAB+AEgkAGXjMAESFgAAAGvYAADjAAASAAAAAPxSAOGLABIAAAAA
+        ADTYAADjAAASAMAAAPiFAPcrABKDAAB8ABgAaO4AnpEAgHwAfHAA/wUA/5IA/3wA//8AYP8Anv8AgP8A
+        fG0AUAUBAJIAAHwAAErpUPQrAICDAHx8AAD8SADj6xUSEgAAAADE/wAr/wCD/wB8/0gAAGUAABUAAAAA
+        AAAoBAEw5QAWEgAAAAA0vgBkOwCDTAB8AFf/5PT/5ID/Enz/AOgAd+PlEBISTwAAAEhtGGVk5RWDEgB8
+        AAAMNAAUZABPgwAAfMzU2OIy5RJPEgAAAAQArgAB/wAA/wAAfxj8iPHj5RISEgAAAFcAKAQBMDkAFn4A
+        AGCINNVkZDaDg358fP8BKP8AMP8AFv8AAFkAUtUAizYAAH5wAAJcADdpAEZjAABvAFBu6S1zzgYARwAA
+        ACwAAAAAEAAQAAAIzQClCBwopUWUJwQTCqSSRImSA0l8KJQSZcYQJiFwaMQARAbBBTwwZsQhwAgFCh4I
+        zhBJUgCFJgpQGGggsEaEECNLBvGo48WLFlI6YNRYcgcHKQNeQIDQQ4qLnCZLyLjgRAgEEwqkOCBZQAMM
+        A0guFFlqwkQGpyQdXLBAwOCDqzZMsJCyAYdJKAtirCBhIm5fJFISuExhAIWICh/K9mWAUAqJFDsMCBmB
+        Im5cAE0FyiBgQOlVxQACJJRxA8RnGzYYIJgoJcYECTmIqAA6MCAAOw==
+</value>
+  </data>
   <metadata name="$this.FormFactorShadowProperty" xml:space="preserve">
     <value>Pocket_PC</value>
-  </metadata>
-  <metadata name="$this.Skin" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>96</value>
   </metadata>
 </root>

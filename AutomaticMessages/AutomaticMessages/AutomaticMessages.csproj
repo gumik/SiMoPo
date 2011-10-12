@@ -71,6 +71,12 @@
     </Compile>
     <Compile Include="Model\Logger.cs" />
     <Compile Include="Model\MessagesManager.cs" />
+    <Compile Include="View\LogViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\LogViewControl.Designer.cs">
+      <DependentUpon>LogViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="View\LogViewControl.resx">
+      <DependentUpon>LogViewControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -144,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ConfigDb.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

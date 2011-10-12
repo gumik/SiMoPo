@@ -73,6 +73,11 @@ namespace AutomaticMessages.View
             }
         }
 
+        private void cancelMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
+
         private bool properKey;
     }
 }

@@ -28,9 +28,12 @@ namespace AutomaticMessages.View
             var changes = messagesDataSet.GetChanges();
             if (changes != null)
             {
+                numbersBindingSource.EndEdit();
+                //messagesTableAdapter.Update(changes as MessagesDataSet);
                 numbersTableAdapter.Update(changes as MessagesDataSet);
                 messagesDataSet.Merge(changes);
                 messagesDataSet.AcceptChanges();
+                //messagesTableAdapter.Fill(messagesDataSet.Messages);
                 numbersTableAdapter.Fill(messagesDataSet.Numbers);
             }
         }
@@ -61,6 +64,22 @@ namespace AutomaticMessages.View
             numberForm.ShowDialog();
         }
 
+        private MessagesDataSet.NumbersRow GetCurrentRow()
+        {
+            var dataRowView = numbersBindingSource.Current as DataRowView;
+
+            if (dataRowView == null)
+            {
+                MessageBox.Show("Please select row.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Hand,
+                        MessageBoxDefaultButton.Button1);
+                return null;
+            }
+
+            var current = dataRowView.Row as MessagesDataSet.NumbersRow;
+            return current;
+        }
+
         private void addMenuItem_Click(object sender, EventArgs __)
         {
             var numberForm = new NumberForm();
@@ -76,8 +95,12 @@ namespace AutomaticMessages.View
 
         private void editMenuItem_Click(object sender, EventArgs __)
         {
-            var dataRowView = numbersBindingSource.Current as DataRowView;
-            var current = dataRowView.Row as MessagesDataSet.NumbersRow;
+            var current = GetCurrentRow();
+
+            if (current == null)
+            {
+                return;
+            }
 
             var numberForm = new NumberForm() { Number = current.Number, MessageId = current.MessageId };
 
@@ -85,47 +108,17 @@ namespace AutomaticMessages.View
             {
                 current.Number = numberForm.Number;
                 current.MessageId = numberForm.MessageId;
-                //UpdateMessageBindingPosition();
             });
-
-            //numberForm.Closing += (_, args) =>
-            //{
-            //    if (numberForm.DialogResult != DialogResult.OK)
-            //    {
-            //        return;
-            //    }
-
-            //    try
-            //    {
-            //        current.Number = numberForm.Number;
-            //        current.MessageId = numberForm.MessageId;
-            //        //UpdateMessageBindingPosition();
-            //        CommitChanges();
-            //    }
-            //    catch (ConstraintException e)
-            //    {
-            //        // ignore it
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        MessageBox.Show(String.Format("Error {0}", e.GetType()), "Error",
-            //            MessageBoxButtons.OK, MessageBoxIcon.Hand,
-            //            MessageBoxDefaultButton.Button1);
-            //        args.Cancel = true;
-            //    }
-            //};
-
-            //numberForm.ShowDialog();
         }
 
         private void deleteMenuItem_Click(object sender, EventArgs e)
         {
-            (numbersBindingSource.Current as DataRowView).Delete();
-        }
-
-        private void numbersListBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-
+            var current = GetCurrentRow();
+            if (current != null)
+            {
+                current.Delete();
+                CommitChanges();
+            }
         }
 
         private void numbersBindingSource_CurrentChanged(object sender, EventArgs e)

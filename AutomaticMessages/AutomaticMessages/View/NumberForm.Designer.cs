@@ -39,9 +39,14 @@
             this.messageTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.cancelMenuItem = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.messagesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.messagesDataSet)).BeginInit();
             this.SuspendLayout();
+            // 
+            // mainMenu1
+            // 
+            this.mainMenu1.MenuItems.Add(this.cancelMenuItem);
             // 
             // numberTextBox
             // 
@@ -114,6 +119,11 @@
             this.label2.Size = new System.Drawing.Size(234, 20);
             this.label2.Text = "Message:";
             // 
+            // cancelMenuItem
+            // 
+            this.cancelMenuItem.Text = "Cancel";
+            this.cancelMenuItem.Click += new System.EventHandler(this.cancelMenuItem_Click);
+            // 
             // NumberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -144,5 +154,6 @@
         private System.Windows.Forms.TextBox messageTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.MenuItem cancelMenuItem;
     }
 }

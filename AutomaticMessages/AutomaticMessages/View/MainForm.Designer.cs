@@ -35,12 +35,9 @@
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.messagesMenuItem = new System.Windows.Forms.MenuItem();
             this.numbersMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem2 = new System.Windows.Forms.MenuItem();
-            this.logListView = new System.Windows.Forms.ListView();
+            this.clearMenuItem = new System.Windows.Forms.MenuItem();
             this.logImageList = new System.Windows.Forms.ImageList();
-            this.dateTimeColumnHeader = new System.Windows.Forms.ColumnHeader();
-            this.numberColumnHeader = new System.Windows.Forms.ColumnHeader();
-            this.textColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.logViewControl1 = new AutomaticMessages.View.LogViewControl();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -57,7 +54,7 @@
             // 
             this.menuItem1.MenuItems.Add(this.messagesMenuItem);
             this.menuItem1.MenuItems.Add(this.numbersMenuItem);
-            this.menuItem1.MenuItems.Add(this.menuItem2);
+            this.menuItem1.MenuItems.Add(this.clearMenuItem);
             this.menuItem1.Text = "Menu";
             // 
             // messagesMenuItem
@@ -70,41 +67,24 @@
             this.numbersMenuItem.Text = "Numbers";
             this.numbersMenuItem.Click += new System.EventHandler(this.numbersMenuItem_Click);
             // 
-            // menuItem2
+            // clearMenuItem
             // 
-            this.menuItem2.Text = "add log";
-            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
-            // 
-            // logListView
-            // 
-            this.logListView.Columns.Add(this.dateTimeColumnHeader);
-            this.logListView.Columns.Add(this.numberColumnHeader);
-            this.logListView.Columns.Add(this.textColumnHeader);
-            this.logListView.FullRowSelect = true;
-            this.logListView.Location = new System.Drawing.Point(3, 3);
-            this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(234, 262);
-            this.logListView.SmallImageList = this.logImageList;
-            this.logListView.TabIndex = 0;
-            this.logListView.View = System.Windows.Forms.View.Details;
+            this.clearMenuItem.Text = "Clear";
+            this.clearMenuItem.Click += new System.EventHandler(this.clearMenuItem_Click);
             this.logImageList.Images.Clear();
             this.logImageList.Images.Add(((System.Drawing.Image)(resources.GetObject("resource"))));
             this.logImageList.Images.Add(((System.Drawing.Image)(resources.GetObject("resource1"))));
             // 
-            // dateTimeColumnHeader
+            // logViewControl1
             // 
-            this.dateTimeColumnHeader.Text = "Timestamp";
-            this.dateTimeColumnHeader.Width = 60;
-            // 
-            // numberColumnHeader
-            // 
-            this.numberColumnHeader.Text = "Number";
-            this.numberColumnHeader.Width = 75;
-            // 
-            // textColumnHeader
-            // 
-            this.textColumnHeader.Text = "Text";
-            this.textColumnHeader.Width = 60;
+            this.logViewControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.logViewControl1.FillWithData = true;
+            this.logViewControl1.Location = new System.Drawing.Point(3, 3);
+            this.logViewControl1.Name = "logViewControl1";
+            this.logViewControl1.Size = new System.Drawing.Size(234, 262);
+            this.logViewControl1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -112,7 +92,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
-            this.Controls.Add(this.logListView);
+            this.Controls.Add(this.logViewControl1);
             this.Menu = this.mainMenu1;
             this.Name = "MainForm";
             this.Text = "MainForm";
@@ -126,11 +106,8 @@
         private System.Windows.Forms.MenuItem messagesMenuItem;
         private System.Windows.Forms.MenuItem numbersMenuItem;
         private System.Windows.Forms.MenuItem menuItem1;
-        private System.Windows.Forms.ListView logListView;
-        private System.Windows.Forms.MenuItem menuItem2;
         private System.Windows.Forms.ImageList logImageList;
-        private System.Windows.Forms.ColumnHeader dateTimeColumnHeader;
-        private System.Windows.Forms.ColumnHeader numberColumnHeader;
-        private System.Windows.Forms.ColumnHeader textColumnHeader;
+        private AutomaticMessages.View.LogViewControl logViewControl1;
+        private System.Windows.Forms.MenuItem clearMenuItem;
     }
 }

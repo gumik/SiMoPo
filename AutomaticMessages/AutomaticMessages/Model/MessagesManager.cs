@@ -22,14 +22,17 @@ namespace AutomaticMessages.Model
             messagesDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             messagesDataSet.EndInit();
 
-            var numbersTableAdapter = new NumbersTableAdapter();
+            numbersTableAdapter = new NumbersTableAdapter();
             numbersTableAdapter.Fill(messagesDataSet.Numbers);
-            var messagesTableAdapter = new MessagesTableAdapter();
+            messagesTableAdapter = new MessagesTableAdapter();
             messagesTableAdapter.Fill(messagesDataSet.Messages);
         }
 
-        public delegate void SmsErrorEventHandler(object sender, SmsErrorEventArgs args);
-        public event SmsErrorEventHandler SmsError = delegate { };
+        public void ReloadConfig()
+        {
+            numbersTableAdapter.Fill(messagesDataSet.Numbers);
+            messagesTableAdapter.Fill(messagesDataSet.Messages);
+        }
 
         public delegate void SmsSendEventHandler(object sender, SmsSendEventArgs args);
         public event SmsSendEventHandler SmsSend = delegate { };
@@ -51,9 +54,8 @@ namespace AutomaticMessages.Model
             {
                 text = results.First();
             }
-            catch (Exception e)
+            catch
             {
-                SmsError(this, new SmsErrorEventArgs(String.Format("Brak tekstu dla numeru: {0}", args.Number)));
                 return;
             }
 
@@ -62,37 +64,31 @@ namespace AutomaticMessages.Model
             try
             {
                 smsMessage.Send();
-                SmsSend(this, new SmsSendEventArgs(args.Number, text));
+                SmsSend(this, new SmsSendEventArgs(args.Number, text, true));
             }
             catch (Exception e)
             {
-                SmsError(this, new SmsErrorEventArgs(String.Format("Błąd wysyłania wiadomości do: {0}", args.Number)));
+                SmsSend(this, new SmsSendEventArgs(args.Number, text, false));
             }
         }
 
         private IncomingsParser incomingParser;
         private MessagesDataSet messagesDataSet;
-    }
-
-    public class SmsErrorEventArgs : EventArgs
-    {
-        public SmsErrorEventArgs(string message)
-        {
-            Message = message;
-        }
-
-        public string Message { get; private set; }
+        private MessagesTableAdapter messagesTableAdapter;
+        private NumbersTableAdapter numbersTableAdapter;
     }
 
     public class SmsSendEventArgs : EventArgs
     {
-        public SmsSendEventArgs(string number, string text)
+        public SmsSendEventArgs(string number, string text, bool success)
         {
             Number = number;
             Text = text;
+            Success = success;
         }
 
         public string Number { get; private set; }
         public string Text { get; private set; }
+        public bool Success { get; private set; }
     }
 }

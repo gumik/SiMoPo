@@ -61,6 +61,22 @@ namespace AutomaticMessages
             }
         }
 
+        private MessagesDataSet.MessagesRow GetCurrentRow()
+        {
+            var dataRowView = messagesBindingSource.Current as DataRowView;
+
+            if (dataRowView == null)
+            {
+                MessageBox.Show("Please select row.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Hand,
+                        MessageBoxDefaultButton.Button1);
+                return null;
+            }
+
+            var current = dataRowView.Row as MessagesDataSet.MessagesRow;
+            return current;
+        }
+
         private void MessagesForm_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'messagesDataSet.Messages' table. You can move, or remove it, as needed.
@@ -78,22 +94,31 @@ namespace AutomaticMessages
             DialogResult = DialogResult.OK;
         }
 
-        private void cancelMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-        }
-
         private void editMenuItem_Click(object sender, EventArgs e)
         {
-            var dataRowView = messagesBindingSource.Current as DataRowView;
-            var current = dataRowView.Row as MessagesDataSet.MessagesRow;
-            EditRow(current);
+            var current = GetCurrentRow();
+            if (current != null)
+            {
+                EditRow(current);
+            }
         }
 
         private void deleteMenuItem_Click(object sender, EventArgs e)
         {
-            (messagesBindingSource.Current as DataRowView).Delete();            
-            CommitChanges();
+            try
+            {
+                var current = GetCurrentRow();
+                if (current != null)
+                {
+                    (messagesBindingSource.Current as DataRowView).Delete();
+                    CommitChanges();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Cannot delete this message because it is used.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+            }
         }
     }
 }

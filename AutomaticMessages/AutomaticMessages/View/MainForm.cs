@@ -18,28 +18,19 @@ namespace AutomaticMessages
         public MainForm()
         {
             InitializeComponent();
-            //mm.SmsError += new MessagesManager.SmsErrorEventHandler(mm_SmsError);
-            //mm.SmsSend += new MessagesManager.SmsSendEventHandler(mm_SmsSend);
 
             incomingParser = new IncomingsParser(true);
             messagesManager = new MessagesManager(incomingParser);
             logger = new Logger();
 
-            dateTime = DateTime.Now;
-            //logBindingSource.DataSourceChanged += (sender, args) => MessageBox.Show("changed");
-            //logBindingSource.AddingNew += (sender, args) => MessageBox.Show(args.NewObject.ToString());
-            //logger.LogDataSet.Log.TableNewRow += (sender, args) => MessageBox.Show(args.Row.GetType().ToString());
-            logger.LogDataSet.Log.RowChanged += new DataRowChangeEventHandler(Log_RowChanged);
+            messagesManager.SmsSend += new MessagesManager.SmsSendEventHandler(messagesManager_SmsSend);
+
+            logViewControl1.Logger = logger;
         }
 
-        void Log_RowChanged(object sender, DataRowChangeEventArgs e)
+        void messagesManager_SmsSend(object sender, SmsSendEventArgs args)
         {
-            if (e.Action == DataRowAction.Add)
-            {
-                var logRow = e.Row as LogDataSet.LogRow;
-                var item = new LogListItem(logRow.DateTime, logRow.Number, logRow.Text, logRow.Success);
-                logListView.Items.Add(item);
-            }
+            logger.AddLog(DateTime.Now, args.Number, args.Text, args.Success);
         }
 
         private void exitMenuItem_Click(object sender, EventArgs e)
@@ -50,32 +41,30 @@ namespace AutomaticMessages
         private void messagesMenuItem_Click(object sender, EventArgs e)
         {
             new MessagesForm().ShowDialog();
+            messagesManager.ReloadConfig();
         }
 
         private void numbersMenuItem_Click(object sender, EventArgs e)
         {
             new NumbersForm().ShowDialog();
+            messagesManager.ReloadConfig();
+        }
+
+        private void clearMenuItem_Click(object sender, EventArgs e)
+        {
+            logger.ClearAll();
         }
 
         private Logger logger;
         private IncomingsParser incomingParser;
         private MessagesManager messagesManager;
-        private DateTime dateTime;
 
+
+        private bool a = true;
         private void menuItem2_Click(object sender, EventArgs e)
         {
-            logger.AddLog(DateTime.Now, "123455", "test", true);
-        }
-
-        class LogListItem : ListViewItem
-        {
-            public LogListItem(DateTime dateTime, string number, string text, bool success) : base()
-            {
-                this.SubItems.Add(dateTime.ToString());
-                this.SubItems.Add(number);
-                this.SubItems.Add(text);
-                this.ImageIndex = success ? 1 : 0;
-            }
+            logger.AddLog(DateTime.Now, "123455", "test", a);
+            a = !a;
         }
     }
 }
