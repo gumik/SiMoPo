@@ -4,7 +4,6 @@
  */
 package pl.edu.uj.ii.psm.images.view;
 
-import java.util.Date;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
@@ -21,10 +20,11 @@ public class PhotoView extends Form {
     
     public PhotoView() {
         super("Camera preview");
-        lastPhotoDate = new StringItem("Last photo:", null);
-        savedPhotoDate = new StringItem("Last different photo:", null);
-        sentPhotoDate = new StringItem("Last photo sent:", null);
-        countersString = new StringItem("sent / saved / different / all", null);
+        sentCountString = new StringItem("Sent:", null);
+        savedCountString = new StringItem("Saved:", null);
+        differentCountString = new StringItem("Different:", null);
+        allCountString = new StringItem("All:", null);
+        
         actualPhoto = new ImageItem("Last saved photo:", null, 
                 ImageItem.LAYOUT_DEFAULT, null);
         
@@ -34,9 +34,11 @@ public class PhotoView extends Form {
         stopCommand = new Command("Stop", Command.CANCEL, 1);
         
         this.append(actualPhoto);
-        this.append(lastPhotoDate);
-        this.append(savedPhotoDate);
-        this.append(countersString);
+        
+        this.append(sentCountString);
+        this.append(savedCountString);
+        this.append(differentCountString);
+        this.append(allCountString);
         
         this.addCommand(configCommand);
         this.addCommand(exitCommand);
@@ -64,35 +66,19 @@ public class PhotoView extends Form {
     }
     
     public void setPhotosAllCount(int value) {
-        allCount = value;
-        refreshCounters();
+        allCountString.setText(Integer.toString(value));
     }
     
     public void setPhotosDiffCount(int value) {
-        differentCount = value;
-        refreshCounters();
+        differentCountString.setText(Integer.toString(value));
     }
     
     public void setPhotosSavedCount(int value) {
-        savedCount = value;
-        refreshCounters();
+        savedCountString.setText(Integer.toString(value));
     }
     
     public void setPhotosSentCount(int value) {
-        sentCount = value;
-        refreshCounters();
-    }
-    
-    public void setDateSaved(Date date) {
-        savedPhotoDate.setText(date.toString());
-    }
-    
-    public void setDateLastPhoto(Date date) {
-        lastPhotoDate.setText(date.toString());
-    }
-    
-    public void setDateSent(Date date) {
-        sentPhotoDate.setText(date.toString());
+        sentCountString.setText(Integer.toString(value));
     }
     
     public void setActualPhoto(Image image) {
@@ -115,30 +101,13 @@ public class PhotoView extends Form {
         this.listener = listener;
     }
     
-    private void refreshCounters() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(sentCount);
-        sb.append(" / ");
-        sb.append(savedCount);
-        sb.append(" / ");
-        sb.append(differentCount);
-        sb.append(" / ");
-        sb.append(allCount);
-        countersString.setText(sb.toString());
-    }
-    
     private PhotoViewListener listener;
     
-    private StringItem lastPhotoDate;
-    private StringItem savedPhotoDate;
-    private StringItem sentPhotoDate;
-    private StringItem countersString;
+    private StringItem sentCountString;
+    private StringItem savedCountString;
+    private StringItem differentCountString;
+    private StringItem allCountString;
     private ImageItem actualPhoto;
-    
-    private int allCount;
-    private int differentCount;
-    private int savedCount;
-    private int sentCount;
     
     private Command configCommand;
     private Command startCommand;

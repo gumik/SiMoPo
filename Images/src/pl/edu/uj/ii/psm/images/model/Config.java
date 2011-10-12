@@ -16,6 +16,7 @@ public class Config {
     private static final String DELAY_KEY = "delay";
     private static final String SIMILARITY_FACTOR_KEY = "similarity";
     private static final String PATH_KEY = "path";
+    private static final String DEVICE_KEY = "device";
     
     private ConfigListener listener;
     
@@ -83,6 +84,18 @@ public class Config {
     
     public String getPath() throws RecordStoreFullException {
         return ConfigStorage.getInstance().get(RECORD_STORE_NAME, PATH_KEY, "");
+    }
+    
+    public void setDevice(String value) throws RecordStoreFullException {
+        ConfigStorage.getInstance().set(RECORD_STORE_NAME, DEVICE_KEY, value);
+        
+        if (listener != null) {
+            listener.DeviceChanged(value);
+        }
+    }
+    
+    public String getDevice() throws RecordStoreFullException {
+        return ConfigStorage.getInstance().get(RECORD_STORE_NAME, DEVICE_KEY, "");
     }
     
     public void setListener(ConfigListener listener) {

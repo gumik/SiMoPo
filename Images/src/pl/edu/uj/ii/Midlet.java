@@ -5,11 +5,8 @@ package pl.edu.uj.ii;
  * and open the template in the editor.
  */
 
-import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.CommandListener;
 import pl.edu.uj.ii.psm.images.model.ImageComparer;
 import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.Displayable;
 import javax.microedition.midlet.*;
 import pl.edu.uj.ii.psm.images.model.Config;
 import pl.edu.uj.ii.psm.images.controller.GigaController;
@@ -50,13 +47,13 @@ public class Midlet extends MIDlet {
         Display.getDisplay(this).setCurrent(photoView);
         
         final Midlet midlet = this;
-        Display.getDisplay(this).setCurrent(DebugScreen.getInstance());
-        DebugScreen.getInstance().setCommandListener(new CommandListener() {
-
-            public void commandAction(Command cmnd, Displayable dsplbl) {
-                Display.getDisplay(midlet).setCurrent(photoView);
-            }
-        });
+        //Display.getDisplay(this).setCurrent(DebugScreen.getInstance());
+//        DebugScreen.getInstance().setCommandListener(new CommandListener() {
+//
+//            public void commandAction(Command cmnd, Displayable dsplbl) {
+//                Display.getDisplay(midlet).setCurrent(photoView);
+//            }
+//        });
         DebugScreen.getInstance().setMsg("debug started");
     }
     

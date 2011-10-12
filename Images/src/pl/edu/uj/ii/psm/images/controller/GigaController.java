@@ -61,6 +61,7 @@ public class GigaController {
             form.setDelay(config.getDelay());
             form.setSimilarityFactor(config.getSimilarityFactor());
             form.setPath(config.getPath());
+            form.setDevice(config.getDevice());
         } catch (RecordStoreFullException ex) {
             // TODO
             ex.printStackTrace();
@@ -94,6 +95,10 @@ public class GigaController {
             public void DelayChanged(int delay) {
                 configDelayChanged(delay);
             }
+
+            public void DeviceChanged(String value) {
+                configDeviceChanged(value);
+            }
         });
     }
     
@@ -102,6 +107,7 @@ public class GigaController {
             configModel.setDelay(configForm.getDelay());
             configModel.setSimilarityFactor(configForm.getSimilarityFactor());
             configModel.setPath(configForm.getPath());
+            configModel.setDevice(configForm.getDevice());
         } catch (IllegalArgumentException e) {            
             Alert alert = new Alert("Error while saving config", e.getMessage(),
                     null, AlertType.ERROR);
@@ -125,6 +131,10 @@ public class GigaController {
 
     private void configPathChanged(String path) {
         photoSaver.setPath(path);
+    }
+
+    private void configDeviceChanged(String value) {
+        photoSaver.setDevice(value);
     }
 
     private void configSimilarityFactorChanged(double factor) {
@@ -233,6 +243,7 @@ public class GigaController {
         
         try {
             photoSaver.setPath(configModel.getPath());
+            photoSaver.setDevice(configModel.getDevice());
         } catch (RecordStoreFullException ex) {
             ex.printStackTrace();
         }

@@ -26,17 +26,20 @@ public class ConfigForm extends Form {
         
         delay = new TextField("Delay (ms)", null, 5, TextField.NUMERIC);
         
+        device = new TextField("Device name: ", null, 128, TextField.ANY);
+        
         final Command pathCommand = new Command("change", Command.ITEM, 0);
         
         path = new TextField("Images catalog:", null, 1024, 
                 TextField.URL | TextField.UNEDITABLE);
-        path.addCommand(pathCommand);
+        path.addCommand(pathCommand);        
         
         final Command cancelCommand = new Command("Cancel", Command.CANCEL, 0);
         final Command okCommand = new Command("OK", Command.OK, 0);
         
         this.append(similarityFactor);
         this.append(delay);
+        this.append(device);
         this.append(path);
         
         this.addCommand(okCommand);
@@ -93,6 +96,14 @@ public class ConfigForm extends Form {
         path.setString(value);
     }
     
+    public String getDevice() {
+        return device.getString();
+    }
+    
+    public void setDevice(String value) {
+        device.setString(value);
+    }
+    
     public void setListener(ConfigFormListener listener) {
         this.listener = listener;
     }
@@ -100,5 +111,6 @@ public class ConfigForm extends Form {
     private TextField similarityFactor;
     private TextField delay;
     private TextField path;
+    private TextField device;
     private ConfigFormListener listener;
 }

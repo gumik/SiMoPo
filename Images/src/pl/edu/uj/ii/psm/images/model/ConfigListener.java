@@ -12,4 +12,5 @@ public interface ConfigListener {
     public void PathChanged(String path);
     public void SimilarityFactorChanged(double factor);
     public void DelayChanged(int delay);
+    public void DeviceChanged(String value);
 }

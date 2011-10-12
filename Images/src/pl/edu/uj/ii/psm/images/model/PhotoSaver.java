@@ -95,8 +95,13 @@ public class PhotoSaver {
     public void setListener(PhotoSaverListener listener) {
         this.listener = listener;
     }
+
+    public void setDevice(String value) {
+        deviceName = value;
+    }
     
     public void startBluetooth() {
+        DebugScreen.getInstance().setMsg(("startBluetooth"));
         new Thread() {
             public void run() {
                 discoverDevices();
@@ -108,14 +113,17 @@ public class PhotoSaver {
         devices = new Vector();
         
         try {
+            DebugScreen.getInstance().setMsg(("discoverDevices thread"));
             LocalDevice device = LocalDevice.getLocalDevice();
             DiscoveryAgent agent = device.getDiscoveryAgent();
             agent.startInquiry(DiscoveryAgent.GIAC, new DiscoveryListener() {
 
-                public void deviceDiscovered(RemoteDevice rd, DeviceClass dc) {
-                    devices.addElement(rd);
+                public void deviceDiscovered(RemoteDevice rd, DeviceClass dc) {                    
                     try {
-                    DebugScreen.getInstance().setMsg("device: " + rd.getFriendlyName(false));
+                        if (rd.getFriendlyName(false).equals(deviceName)) {
+                            devices.addElement(rd);
+                        }
+                        DebugScreen.getInstance().setMsg("device: " + rd.getFriendlyName(false));
                     } catch (Exception e) { }
                 }
 
@@ -197,7 +205,7 @@ public class PhotoSaver {
             cs.connect(null);
                         
             FileConnection dir = (FileConnection)Connector.open(path);
-            Enumeration enumeration = dir.list("IMEI*.jpg", true);
+            Enumeration enumeration = dir.list("IMEI*.png", true);
             while (enumeration.hasMoreElements()) {
                 String fileName = (String) enumeration.nextElement();
                 DebugScreen.getInstance().setMsg("file to send: " + fileName);
@@ -314,6 +322,8 @@ public class PhotoSaver {
     private Image prevPhoto;
     private ImageComparer imageComparer;
     private PhotoSaverListener listener;
+    
+    private String deviceName;
     
     private int allCount;
     private int diffCount;
