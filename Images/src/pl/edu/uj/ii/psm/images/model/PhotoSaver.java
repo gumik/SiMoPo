@@ -266,7 +266,7 @@ public class PhotoSaver {
                 .append("-").append(toString(calendar.get(Calendar.HOUR_OF_DAY), 2))
                 .append("-").append(toString(calendar.get(Calendar.MINUTE), 2))
                 .append("-").append(toString(calendar.get(Calendar.SECOND), 2))
-                .append(".jpg");        
+                .append(".png");        
         
         return sb.toString();
     }

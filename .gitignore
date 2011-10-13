@@ -5,5 +5,7 @@ Images/src/j2meunit
 */nbproject/private
 */*/bin
 */*/obj
+*/bin
 *.csproj.user
 *.suo
+.metadata
